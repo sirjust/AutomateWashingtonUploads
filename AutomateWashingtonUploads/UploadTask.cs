@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System.Threading;
+using OpenQA.Selenium.Support.UI;
 
 namespace AutomateWashingtonUploads
 {
@@ -30,15 +31,16 @@ namespace AutomateWashingtonUploads
 
             IWebElement loginButton = driver.FindElement(By.XPath("//input[@value='SUBMIT']"));
             loginButton.Click();
-            Thread.Sleep(3000);
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            IWebElement tradeReporting = wait.Until<IWebElement>(d => d.FindElement(By.XPath("//a[contains(text(),'Trades Education Roster Reporting System')]")));
 
-            IWebElement tradeReporting = driver.FindElement(By.XPath("//a[contains(text(),'Trades Education Roster Reporting System')]"));
+            //IWebElement tradeReporting = driver.FindElement(By.XPath("//a[contains(text(),'Trades Education Roster Reporting System')]"));
             tradeReporting.Click();
-            Thread.Sleep(3000);
+            //Thread.Sleep(3000);
 
-            IWebElement keepGoing = driver.FindElement(By.XPath("//input[@value='CONTINUE']"));
+            IWebElement keepGoing = wait.Until<IWebElement>(d=> d.FindElement(By.XPath("//input[@value='CONTINUE']")));
             keepGoing.Click();
-            Thread.Sleep(3000);
+            //Thread.Sleep(3000);
 
             foreach(Completion completion in completions)
             {
@@ -52,7 +54,7 @@ namespace AutomateWashingtonUploads
                 int day = int.Parse(splitUpDate[2]);
                 DateTime completionDate = new DateTime(year, month, day);
 
-                IWebElement tradeContainer = driver.FindElement(By.Id("ddlCourseType"));
+                IWebElement tradeContainer = wait.Until<IWebElement>(d=> d.FindElement(By.Id("ddlCourseType")));
                 int numberOfDownClicks = 10;
                 while (numberOfDownClicks > 0)
                 {
@@ -65,18 +67,18 @@ namespace AutomateWashingtonUploads
 
                 IWebElement btnNext = driver.FindElement(By.Id("btnNext"));
                 btnNext.Click();
-                Thread.Sleep(3000);
+                //Thread.Sleep(3000);
 
-                IWebElement anchor = driver.FindElement(By.PartialLinkText("HVAC"));
+                IWebElement anchor = wait.Until<IWebElement>(d=> d.FindElement(By.PartialLinkText("HVAC")));
                 anchor.Click();
-                Thread.Sleep(3000);
+                //Thread.Sleep(3000);
 
                 // if the completion date is incorrect for the course the program will log it and go to the next completion
                 try
                 {
-                    IWebElement dateInput = driver.FindElement(By.Id("txtComplDt"));
+                    IWebElement dateInput = wait.Until<IWebElement>(d=> d.FindElement(By.Id("txtComplDt")));
                     dateInput.SendKeys(String.Format("{0:MM/dd/yyyy}", completionDate));
-                    Thread.Sleep(3000);
+                    //Thread.Sleep(3000);
                 }
                 catch
                 {
@@ -92,23 +94,23 @@ namespace AutomateWashingtonUploads
                     continue;
                 }
 
-                IWebElement createRoster = driver.FindElement(By.Id("btnGetRoster"));
+                IWebElement createRoster = wait.Until<IWebElement>(d=> d.FindElement(By.Id("btnGetRoster")));
                 createRoster.Click();
-                Thread.Sleep(3000);
+                //Thread.Sleep(3000);
 
                 try
                 {
-                    IWebElement inputLicense = driver.FindElement(By.Id("txtLicense"));
+                    IWebElement inputLicense = wait.Until<IWebElement>(d=> d.FindElement(By.Id("txtLicense")));
                     inputLicense.SendKeys(license);
-                    Thread.Sleep(3000);
-                    IWebElement findLicensee = driver.FindElement(By.Id("btnPeople"));
+                    //Thread.Sleep(3000);
+                    IWebElement findLicensee = wait.Until<IWebElement>(d=> d.FindElement(By.Id("btnPeople")));
                     findLicensee.Click();
-                    Thread.Sleep(3000);
+                    //Thread.Sleep(3000);
 
                     // next we have to submit roster
-                    IWebElement addToRoster = driver.FindElement(By.Id("btnTransferToRoster"));
+                    IWebElement addToRoster = wait.Until<IWebElement>(d=> d.FindElement(By.Id("btnTransferToRoster")));
                     addToRoster.Click();
-                    Thread.Sleep(3000);
+                    //Thread.Sleep(3000);
                 }
                 catch
                 {
@@ -121,9 +123,9 @@ namespace AutomateWashingtonUploads
                 finally
                 {
                     //then go back to the previous page
-                    IWebElement goBack = driver.FindElement(By.Id("btnPrev"));
+                    IWebElement goBack = wait.Until<IWebElement>(d=> d.FindElement(By.Id("btnPrev")));
                     goBack.Click();
-                    Thread.Sleep(3000);
+                    //Thread.Sleep(3000);
                 }
                 //loop again until the end
             }
