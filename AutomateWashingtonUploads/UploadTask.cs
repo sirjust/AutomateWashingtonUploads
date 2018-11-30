@@ -48,27 +48,57 @@ namespace AutomateWashingtonUploads
                 int year = int.Parse(splitUpDate[0]);
                 int month = int.Parse(splitUpDate[1]);
                 int day = int.Parse(splitUpDate[2]);
+                int numberOfDownClicks = 0;
                 DateTime completionDate = new DateTime(year, month, day);
-
-                IWebElement tradeContainer = wait.Until<IWebElement>(d=> d.FindElement(By.Id("ddlCourseType")));
                 // for electricians this variable should be 2
-                int numberOfDownClicks = 10;
-                while (numberOfDownClicks > 0)
+
+                // if the plumbing courses array has a value that matches completion.course, click down 10 times, otherwise it is
+                // an electrical course, and the variable is 2
+                if (PlumbingCourses.WAPlumbingCourses.Contains(courseNumber))
                 {
-                    tradeContainer.SendKeys(Keys.Down);
-                    numberOfDownClicks--;
+                    numberOfDownClicks = 10;
+                }
+                else
+                {
+                    numberOfDownClicks = 2;
                 }
 
-                IWebElement courseField = driver.FindElement(By.Id("txtClassID"));
-                courseField.SendKeys(courseNumber);
+                IWebElement tradeContainer = wait.Until<IWebElement>(d=> d.FindElement(By.Id("ddlCourseType")));
 
-                IWebElement btnNext = driver.FindElement(By.Id("btnNext"));
-                btnNext.Click();
+                // if the course isn't in the plumbing array or an electrical course, it will be handled by the catch block
+                try
+                {
+                    while (numberOfDownClicks > 0)
+                    {
+                        tradeContainer.SendKeys(Keys.Down);
+                        numberOfDownClicks--;
+                    }
 
-                IWebElement anchor = wait.Until<IWebElement>(d=> d.FindElement(By.PartialLinkText("HVAC")));
-                anchor.Click();
+                    IWebElement courseField = driver.FindElement(By.Id("txtClassID"));
+                    courseField.SendKeys(courseNumber);
+
+                    IWebElement btnNext = driver.FindElement(By.Id("btnNext"));
+                    btnNext.Click();
+
+                    IWebElement anchor = wait.Until<IWebElement>(d => d.FindElement(By.PartialLinkText("HVAC")));
+                    anchor.Click();
+                }
+                catch
+                {
+                    string errorInfo = String.Format("The following completion encountered an error: {0} | {1} | {2} | {3}", completion.course, completion.date, completion.license, completion.name);
+                    Logger logger = new Logger();
+                    StreamWriter sw = new StreamWriter(@"log.txt", true);
+                    logger.writeErrorsToLog(errorInfo, sw);
+                    sw.Close();
+                    //then go back to the previous page
+                    IWebElement goBack = driver.FindElement(By.Id("btnPrev"));
+                    goBack.Click();
+                    Thread.Sleep(3000);
+                    continue;
+                }
 
                 // if the completion date is incorrect for the course the program will log it and go to the next completion
+                // this occurs with older electrical courses, where the completion date is out of the range of course validity
                 try
                 {
                     IWebElement dateInput = wait.Until<IWebElement>(d=> d.FindElement(By.Id("txtComplDt")));
