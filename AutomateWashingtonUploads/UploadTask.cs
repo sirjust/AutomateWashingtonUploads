@@ -14,10 +14,12 @@ namespace AutomateWashingtonUploads
     public class UploadTask
     {
         IWebDriver driver;
+        string thisPath = System.IO.Directory.GetCurrentDirectory();
 
         public void inputCompletions(List<Completion> completions)
         {
-            driver = new ChromeDriver(@"C:\Users\SirJUST\source\repos\AutomateWashingtonUploads\packages\Selenium.Chrome.WebDriver.2.43\driver");
+            Console.WriteLine(thisPath);
+            driver = new ChromeDriver(@"../../../packages/Selenium.Chrome.WebDriver.2.43/driver/");
             driver.Url = "https://secureaccess.wa.gov/myAccess/saw/select.do";
             driver.Manage().Window.Maximize();
             LoginInfo loginInfo = new LoginInfo();
@@ -32,8 +34,16 @@ namespace AutomateWashingtonUploads
             IWebElement loginButton = driver.FindElement(By.XPath("//input[@value='SUBMIT']"));
             loginButton.Click();
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            IWebElement tradeReporting = wait.Until<IWebElement>(d => d.FindElement(By.XPath("//a[contains(text(),'Trades Education Roster Reporting System')]")));
-            tradeReporting.Click();
+
+            try
+            {
+                IWebElement accessButton = wait.Until<IWebElement>(d => d.FindElement(By.XPath("//div[@class='table-row table-row-odd']//input[@value='ACCESS']")));
+                accessButton.Click();
+            } catch
+            {
+                IWebElement tradeReporting = wait.Until<IWebElement>(d => d.FindElement(By.XPath("//a[contains(text(),'Trades Education Roster Reporting System')]")));
+                tradeReporting.Click();
+            }
 
             IWebElement keepGoing = wait.Until<IWebElement>(d=> d.FindElement(By.XPath("//input[@value='CONTINUE']")));
             keepGoing.Click();
@@ -148,7 +158,7 @@ namespace AutomateWashingtonUploads
                 }
                 //loop again until the end
             }
-            driver.Close();
+            //driver.Close();
         }
     }
 }
