@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConvertDataToObjectList.cs" />
+    <Compile Include="LogException.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="LoginInfo.cs" />
     <Compile Include="PlumbingCourses.cs" />

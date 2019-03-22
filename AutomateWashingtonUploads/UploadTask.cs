@@ -138,11 +138,12 @@ namespace AutomateWashingtonUploads
                     IWebElement findLicensee = wait.Until<IWebElement>(d=> d.FindElement(By.Id("btnPeople")));
                     findLicensee.Click();
 
+                    Thread.Sleep(1000);
                     // next we have to submit the roster
                     IWebElement addToRoster = wait.Until<IWebElement>(d=> d.FindElement(By.Id("btnTransferToRoster")));
                     addToRoster.Click();
                 }
-                catch
+                catch(Exception ex)
                 {
                     string errorInfo = String.Format("The following completion encountered an error: {0} | {1} | {2} | {3}",completion.course, completion.date, completion.license, completion.name);
                     Logger logger = new Logger();
