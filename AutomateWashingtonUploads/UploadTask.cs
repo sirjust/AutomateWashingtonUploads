@@ -60,7 +60,6 @@ namespace AutomateWashingtonUploads
                 int day = int.Parse(splitUpDate[2]);
                 int numberOfDownClicks = 0;
                 DateTime completionDate = new DateTime(year, month, day);
-                // for electricians this variable should be 2
 
                 // if the plumbing courses array has a value that matches completion.course, click down 10 times, otherwise it is
                 // an electrical course, and the variable is 2
@@ -93,13 +92,10 @@ namespace AutomateWashingtonUploads
                     IWebElement anchor = wait.Until<IWebElement>(d => d.FindElement(By.PartialLinkText("HVAC")));
                     anchor.Click();
                 }
-                catch
+                catch(Exception ex)
                 {
-                    string errorInfo = String.Format("The following completion encountered an error: {0} | {1} | {2} | {3}", completion.course, completion.date, completion.license, completion.name);
-                    Logger logger = new Logger();
-                    StreamWriter sw = new StreamWriter(@"log.txt", true);
-                    logger.writeErrorsToLog(errorInfo, sw);
-                    sw.Close();
+                    LogException logException = new LogException();
+                    logException.logException(ex, completion);
                     //then go back to the previous page
                     IWebElement goBack = driver.FindElement(By.Id("btnPrev"));
                     goBack.Click();
@@ -114,13 +110,10 @@ namespace AutomateWashingtonUploads
                     IWebElement dateInput = wait.Until<IWebElement>(d=> d.FindElement(By.Id("txtComplDt")));
                     dateInput.SendKeys(String.Format("{0:MM/dd/yyyy}", completionDate));
                 }
-                catch
+                catch(Exception ex)
                 {
-                    string errorInfo = String.Format("The following completion encountered an error: {0} | {1} | {2} | {3}", completion.course, completion.date, completion.license, completion.name);
-                    Logger logger = new Logger();
-                    StreamWriter sw = new StreamWriter(@"log.txt", true);
-                    logger.writeErrorsToLog(errorInfo, sw);
-                    sw.Close();
+                    LogException logException = new LogException();
+                    logException.logException(ex, completion);
                     //then go back to the previous page
                     IWebElement goBack = driver.FindElement(By.Id("btnPrev"));
                     goBack.Click();
@@ -145,11 +138,8 @@ namespace AutomateWashingtonUploads
                 }
                 catch(Exception ex)
                 {
-                    string errorInfo = String.Format("The following completion encountered an error: {0} | {1} | {2} | {3}",completion.course, completion.date, completion.license, completion.name);
-                    Logger logger = new Logger();
-                    StreamWriter sw = new StreamWriter(@"log.txt", true);
-                    logger.writeErrorsToLog(errorInfo, sw);
-                    sw.Close();
+                    LogException logException = new LogException();
+                    logException.logException(ex, completion);
                 }
                 finally
                 {

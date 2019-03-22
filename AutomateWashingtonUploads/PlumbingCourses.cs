@@ -45,9 +45,9 @@ namespace AutomateWashingtonUploads
         public static Dictionary<string, string> Old_New_Courses = new Dictionary<string, string>{
             {"WA2016-323", "WA2019-159" },
             {"WA2016-1", "WA2019-158" }, // electrical review
-            {"WA2016-2", "WA2019-156" },
-            {"WA2016-3", "WA2019-157" },
-            {"WA2016-4", "WA2019-155" }
+            {"WA2016-2", "WA2019-156" }, // 2015 UPC Chapters 2 - 6 Questions
+            {"WA2016-3", "WA2019-157" }, // 2015 UPC Chapters 7, 8, 9 Questions
+            {"WA2016-4", "WA2019-155" } // 2015 UPC Chapter 6 Waer Systems Part 1
         };
     }
 }
