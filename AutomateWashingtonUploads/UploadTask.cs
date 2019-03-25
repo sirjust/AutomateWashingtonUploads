@@ -18,8 +18,10 @@ namespace AutomateWashingtonUploads
 
         public void inputCompletions(List<Completion> completions)
         {
-            Console.WriteLine(thisPath);
-            driver = new ChromeDriver(@"../../../packages/Selenium.Chrome.WebDriver.2.43/driver/");
+            ChromeOptions options = new ChromeOptions();
+            options.AddArgument("--ignore-certificate-errors");
+            options.AddArgument("--ignore-ssl-errors");
+            driver = new ChromeDriver(@"../../../packages/Selenium.Chrome.WebDriver.2.43/driver/", options);
             driver.Url = "https://secureaccess.wa.gov/myAccess/saw/select.do";
             driver.Manage().Window.Maximize();
             LoginInfo loginInfo = new LoginInfo();
@@ -60,6 +62,11 @@ namespace AutomateWashingtonUploads
                 int day = int.Parse(splitUpDate[2]);
                 int numberOfDownClicks = 0;
                 DateTime completionDate = new DateTime(year, month, day);
+
+                if (PlumbingCourses.Old_New_Courses.ContainsKey(courseNumber))
+                {
+                    courseNumber = PlumbingCourses.Old_New_Courses[courseNumber];
+                }
 
                 // if the plumbing courses array has a value that matches completion.course, click down 10 times, otherwise it is
                 // an electrical course, and the variable is 2
@@ -144,6 +151,7 @@ namespace AutomateWashingtonUploads
                 finally
                 {
                     //then go back to the previous page
+                    Thread.Sleep(1000);
                     IWebElement goBack = wait.Until<IWebElement>(d=> d.FindElement(By.Id("btnPrev")));
                     goBack.Click();
                 }
