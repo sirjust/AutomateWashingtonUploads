@@ -8,6 +8,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System.Threading;
 using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Firefox;
 
 namespace AutomateWashingtonUploads
 {
@@ -18,10 +19,11 @@ namespace AutomateWashingtonUploads
 
         public void inputCompletions(List<Completion> completions)
         {
-            ChromeOptions options = new ChromeOptions();
-            options.AddArgument("--ignore-certificate-errors");
-            options.AddArgument("--ignore-ssl-errors");
-            driver = new ChromeDriver(@"../../../packages/Selenium.Chrome.WebDriver.2.43/driver/", options);
+            //ChromeOptions options = new ChromeOptions();
+            //options.AddArgument("--ignore-certificate-errors");
+            //options.AddArgument("--ignore-ssl-errors");
+            //driver = new ChromeDriver(@"../../../packages/Selenium.Chrome.WebDriver.2.43/driver/", options);
+            driver = new FirefoxDriver(@"../../../packages/Selenium.Firefox.WebDriver.0.23.0/driver/");
             driver.Url = "https://secureaccess.wa.gov/myAccess/saw/select.do";
             driver.Manage().Window.Maximize();
             LoginInfo loginInfo = new LoginInfo();
@@ -32,22 +34,21 @@ namespace AutomateWashingtonUploads
 
             usernameInput.SendKeys(myUserName);
             passwordInput.SendKeys(myPassword);
-
-            IWebElement loginButton = driver.FindElement(By.XPath("//input[@value='SUBMIT']"));
-            loginButton.Click();
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
 
             try
             {
-                IWebElement accessButton = wait.Until<IWebElement>(d => d.FindElement(By.XPath("//div[@class='table-row table-row-odd']//input[@value='ACCESS']")));
+                IWebElement loginButton = wait.Until(d => d.FindElement(By.XPath("//input[@value='SUBMIT']")));
+                loginButton.Click();
+                IWebElement accessButton = wait.Until(d => d.FindElement(By.XPath("//div[@class='table-row table-row-odd']//input[@value='ACCESS']")));
                 accessButton.Click();
             } catch
             {
-                IWebElement tradeReporting = wait.Until<IWebElement>(d => d.FindElement(By.XPath("//a[contains(text(),'Trades Education Roster Reporting System')]")));
+                IWebElement tradeReporting = wait.Until(d => d.FindElement(By.XPath("//a[contains(text(),'Trades Education Roster Reporting System')]")));
                 tradeReporting.Click();
             }
 
-            IWebElement keepGoing = wait.Until<IWebElement>(d=> d.FindElement(By.XPath("//input[@value='CONTINUE']")));
+            IWebElement keepGoing = wait.Until(d=> d.FindElement(By.XPath("//input[@value='CONTINUE']")));
             keepGoing.Click();
 
             foreach(Completion completion in completions)
@@ -79,7 +80,7 @@ namespace AutomateWashingtonUploads
                     numberOfDownClicks = 2;
                 }
 
-                IWebElement tradeContainer = wait.Until<IWebElement>(d=> d.FindElement(By.Id("ddlCourseType")));
+                IWebElement tradeContainer = wait.Until(d=> d.FindElement(By.Id("ddlCourseType")));
 
                 // if the course isn't in the plumbing array or an electrical course, it will be handled by the catch block
                 try
@@ -90,10 +91,10 @@ namespace AutomateWashingtonUploads
                         numberOfDownClicks--;
                     }
 
-                    IWebElement courseField = driver.FindElement(By.Id("txtClassID"));
+                    IWebElement courseField = wait.Until(d=>d.FindElement(By.Id("txtClassID")));
                     courseField.SendKeys(courseNumber);
 
-                    IWebElement btnNext = driver.FindElement(By.Id("btnNext"));
+                    IWebElement btnNext = wait.Until(d=>d.FindElement(By.Id("btnNext")));
                     btnNext.Click();
 
                     IWebElement anchor = wait.Until<IWebElement>(d => d.FindElement(By.PartialLinkText("HVAC")));
@@ -106,7 +107,6 @@ namespace AutomateWashingtonUploads
                     //then go back to the previous page
                     IWebElement goBack = driver.FindElement(By.Id("btnPrev"));
                     goBack.Click();
-                    Thread.Sleep(3000);
                     continue;
                 }
 
@@ -114,7 +114,7 @@ namespace AutomateWashingtonUploads
                 // this occurs with older electrical courses, where the completion date is out of the range of course validity
                 try
                 {
-                    IWebElement dateInput = wait.Until<IWebElement>(d=> d.FindElement(By.Id("txtComplDt")));
+                    IWebElement dateInput = wait.Until(d=> d.FindElement(By.Id("txtComplDt")));
                     dateInput.SendKeys(String.Format("{0:MM/dd/yyyy}", completionDate));
                 }
                 catch(Exception ex)
@@ -124,21 +124,19 @@ namespace AutomateWashingtonUploads
                     //then go back to the previous page
                     IWebElement goBack = driver.FindElement(By.Id("btnPrev"));
                     goBack.Click();
-                    Thread.Sleep(3000);
                     continue;
                 }
 
-                IWebElement createRoster = wait.Until<IWebElement>(d=> d.FindElement(By.Id("btnGetRoster")));
+                IWebElement createRoster = wait.Until(d=> d.FindElement(By.Id("btnGetRoster")));
                 createRoster.Click();
 
                 try
                 {
-                    IWebElement inputLicense = wait.Until<IWebElement>(d=> d.FindElement(By.Id("txtLicense")));
+                    IWebElement inputLicense = wait.Until(d=> d.FindElement(By.Id("txtLicense")));
                     inputLicense.SendKeys(license);
-                    IWebElement findLicensee = wait.Until<IWebElement>(d=> d.FindElement(By.Id("btnPeople")));
+                    IWebElement findLicensee = wait.Until(d=> d.FindElement(By.Id("btnPeople")));
                     findLicensee.Click();
 
-                    Thread.Sleep(1000);
                     // next we have to submit the roster
                     IWebElement addToRoster = wait.Until<IWebElement>(d=> d.FindElement(By.Id("btnTransferToRoster")));
                     addToRoster.Click();
@@ -151,8 +149,7 @@ namespace AutomateWashingtonUploads
                 finally
                 {
                     //then go back to the previous page
-                    Thread.Sleep(1000);
-                    IWebElement goBack = wait.Until<IWebElement>(d=> d.FindElement(By.Id("btnPrev")));
+                    IWebElement goBack = wait.Until(d=> d.FindElement(By.Id("btnPrev")));
                     goBack.Click();
                 }
                 //loop again until the end
