@@ -19,10 +19,6 @@ namespace AutomateWashingtonUploads
 
         public void inputCompletions(List<Completion> completions)
         {
-            //ChromeOptions options = new ChromeOptions();
-            //options.AddArgument("--ignore-certificate-errors");
-            //options.AddArgument("--ignore-ssl-errors");
-            //driver = new ChromeDriver(@"../../../packages/Selenium.Chrome.WebDriver.2.43/driver/", options);
             driver = new FirefoxDriver(@"../../../packages/Selenium.Firefox.WebDriver.0.23.0/driver/");
             driver.Url = "https://secureaccess.wa.gov/myAccess/saw/select.do";
             driver.Manage().Window.Maximize();
@@ -154,6 +150,7 @@ namespace AutomateWashingtonUploads
                 }
                 //loop again until the end
             }
+            // I initially had the driver close, but found it more useful to have it remain open so we can fix any errors without loading a new page
             //driver.Close();
         }
     }
