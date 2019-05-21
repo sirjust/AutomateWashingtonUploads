@@ -1,22 +1,24 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutomateWashingtonUploads
 {
-    public class Logger
+    public static class Logger
     {
-
-        public void writeErrorsToLog(string logMessage, TextWriter sw)
+        private static void WriteErrorsToLog(string logMessage, TextWriter sw)
         {
             sw.Write("\r\nLog Entry : ");
-            sw.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(),
-                DateTime.Now.ToLongDateString());
-            sw.WriteLine("{0}", logMessage);
-            sw.WriteLine("-------------------------------");
+            sw.WriteLine($"{DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}");
+            sw.WriteLine($"{logMessage}");
+        }
+
+        public static void LogException(Exception ex, Completion completion)
+        {
+            string errorInfo = ($"The following completion encountered an {ex.GetType().ToString()} error:\r\n{completion.course} | {completion.date} | {completion.license} | {completion.name}\r\nDetails: {ex.InnerException.Message}\r\n-------------------------------");
+            StreamWriter sw = new StreamWriter(@"..\..\..\Logs\log_" + DateTime.Today.Month.ToString() + "-" + DateTime.Today.Day.ToString() + "-" + DateTime.Today.Year.ToString() + ".txt", true);
+            WriteErrorsToLog(errorInfo, sw);
+            Console.WriteLine($"\n{errorInfo}");
+            sw.Close();
         }
     }
 }

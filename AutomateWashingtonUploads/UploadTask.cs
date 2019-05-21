@@ -2,11 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using System.Threading;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Firefox;
 
@@ -15,11 +11,11 @@ namespace AutomateWashingtonUploads
     public class UploadTask
     {
         IWebDriver driver;
-        string thisPath = System.IO.Directory.GetCurrentDirectory();
+        string thisPath = Directory.GetCurrentDirectory();
 
-        public void inputCompletions(List<Completion> completions)
+        public void InputCompletions(List<Completion> completions)
         {
-            driver = new FirefoxDriver(@"../../../packages/Selenium.Firefox.WebDriver.0.23.0/driver/");
+            driver = new FirefoxDriver(@"../../../packages/Selenium.Firefox.WebDriver.0.24.0/driver/");
             driver.Url = "https://secureaccess.wa.gov/myAccess/saw/select.do";
             driver.Manage().Window.Maximize();
             LoginInfo loginInfo = new LoginInfo();
@@ -76,11 +72,10 @@ namespace AutomateWashingtonUploads
                     numberOfDownClicks = 2;
                 }
 
-                IWebElement tradeContainer = wait.Until(d=> d.FindElement(By.Id("ddlCourseType")));
-
                 // if the course isn't in the plumbing array or an electrical course, it will be handled by the catch block
                 try
                 {
+                    IWebElement tradeContainer = wait.Until(d => d.FindElement(By.Id("ddlCourseType")));
                     while (numberOfDownClicks > 0)
                     {
                         tradeContainer.SendKeys(Keys.Down);
@@ -98,8 +93,7 @@ namespace AutomateWashingtonUploads
                 }
                 catch(Exception ex)
                 {
-                    LogException logException = new LogException();
-                    logException.logException(ex, completion);
+                    Logger.LogException(ex, completion);
                     //then go back to the previous page
                     IWebElement goBack = driver.FindElement(By.Id("btnPrev"));
                     goBack.Click();
@@ -115,19 +109,17 @@ namespace AutomateWashingtonUploads
                 }
                 catch(Exception ex)
                 {
-                    LogException logException = new LogException();
-                    logException.logException(ex, completion);
+                    Logger.LogException(ex, completion);
                     //then go back to the previous page
                     IWebElement goBack = driver.FindElement(By.Id("btnPrev"));
                     goBack.Click();
                     continue;
                 }
 
-                IWebElement createRoster = wait.Until(d=> d.FindElement(By.Id("btnGetRoster")));
-                createRoster.Click();
-
                 try
                 {
+                    IWebElement createRoster = wait.Until(d => d.FindElement(By.Id("btnGetRoster")));
+                    createRoster.Click();
                     IWebElement inputLicense = wait.Until(d=> d.FindElement(By.Id("txtLicense")));
                     inputLicense.SendKeys(license);
                     IWebElement findLicensee = wait.Until(d=> d.FindElement(By.Id("btnPeople")));
@@ -139,8 +131,7 @@ namespace AutomateWashingtonUploads
                 }
                 catch(Exception ex)
                 {
-                    LogException logException = new LogException();
-                    logException.logException(ex, completion);
+                    Logger.LogException(ex, completion);
                 }
                 finally
                 {
