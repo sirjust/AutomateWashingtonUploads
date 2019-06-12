@@ -50,7 +50,10 @@ namespace AutomateWashingtonUploads
             {"WA2016-356", "WA2019-157" }, // 2015 UPC Chapters 7, 8, 9 Questions
             {"WA2016-215", "WA2019-155" }, // 2015 UPC Chapter 6 Waer Systems Part 1
             {"WA2016-286", "WA2019-229" }, // Chapter 5 Water Heaters
-            {"WA2016-284", "WA2019-323" } // Chapter 8 Indirect Wastes
+            {"WA2016-284", "WA2019-323" }, // Chapter 8 Indirect Wastes
+            {"WA2016-509", "WA2019-433" }, // Chapter 2 Definitions
+            {"WA2016-491", "WA2019-435" }, // Chapter 7 Sanitary Drains
+            {"WA2016-587", "WA2019-434" } // Chapter 6 Water Systems
         };
     }
 }
