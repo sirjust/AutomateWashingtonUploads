@@ -48,6 +48,11 @@ namespace AutomateWashingtonUploads
                 // from here we loop through each completion
                 string courseNumber = completion.course;
                 string license = completion.license;
+                // check if the user has put in a false value for the second to last character
+                if(license[10] == '0')
+                {
+                    license = Helper.ChangeSecondToLastCharacter(license);
+                }
                 string dateString = completion.date;
                 string[] splitUpDate = dateString.Split('-');
                 int year = int.Parse(splitUpDate[0]);

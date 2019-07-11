@@ -46,5 +46,12 @@ namespace AutomateWashingtonUploads
             }
             return result;
         }
+
+        public static string ChangeSecondToLastCharacter(string s)
+        {
+            char[] license = s.ToCharArray();
+            license[10] = 'O';
+            return new string(license);
+        }
     }
 }

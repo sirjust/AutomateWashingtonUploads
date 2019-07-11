@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28922.388
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomateWashingtonUploads", "AutomateWashingtonUploads\AutomateWashingtonUploads.csproj", "{A1116026-578D-454E-8FD4-83D1115BBA8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomateWashingtonUploads.Tests", "AutomateWashingtonUploads.Tests\AutomateWashingtonUploads.Tests.csproj", "{8AD4E0C7-B5ED-4C70-B2A6-3914306EA9C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A1116026-578D-454E-8FD4-83D1115BBA8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A1116026-578D-454E-8FD4-83D1115BBA8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A1116026-578D-454E-8FD4-83D1115BBA8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AD4E0C7-B5ED-4C70-B2A6-3914306EA9C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AD4E0C7-B5ED-4C70-B2A6-3914306EA9C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AD4E0C7-B5ED-4C70-B2A6-3914306EA9C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AD4E0C7-B5ED-4C70-B2A6-3914306EA9C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
