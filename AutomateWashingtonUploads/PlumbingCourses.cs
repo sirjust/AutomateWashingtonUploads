@@ -40,7 +40,10 @@ namespace AutomateWashingtonUploads
             "WA2019-158",
             "WA2019-159",
             "WA2019-229",
-            "WA2019-323"
+            "WA2019-323",
+            "WA2019-433",
+            "WA2019-434",
+            "WA2019-435"
         };
 
         public static Dictionary<string, string> Old_New_Courses = new Dictionary<string, string>{
