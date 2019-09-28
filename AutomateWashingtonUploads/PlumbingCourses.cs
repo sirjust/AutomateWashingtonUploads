@@ -43,7 +43,8 @@ namespace AutomateWashingtonUploads
             "WA2019-323",
             "WA2019-433",
             "WA2019-434",
-            "WA2019-435"
+            "WA2019-435",
+            "WA2019-610"
         };
 
         public static Dictionary<string, string> Old_New_Courses = new Dictionary<string, string>{
@@ -56,7 +57,8 @@ namespace AutomateWashingtonUploads
             {"WA2016-284", "WA2019-323" }, // Chapter 8 Indirect Wastes
             {"WA2016-509", "WA2019-433" }, // Chapter 2 Definitions
             {"WA2016-491", "WA2019-435" }, // Chapter 7 Sanitary Drains
-            {"WA2016-587", "WA2019-434" } // Chapter 6 Water Systems
+            {"WA2016-587", "WA2019-434" }, // Chapter 6 Water Systems
+            {"WA2016-741", "WA2019-610" }, // Understanding Ele. Wire Dia.
         };
     }
 }
