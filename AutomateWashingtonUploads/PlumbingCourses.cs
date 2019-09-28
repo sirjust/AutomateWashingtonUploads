@@ -58,7 +58,7 @@ namespace AutomateWashingtonUploads
             {"WA2016-509", "WA2019-433" }, // Chapter 2 Definitions
             {"WA2016-491", "WA2019-435" }, // Chapter 7 Sanitary Drains
             {"WA2016-587", "WA2019-434" }, // Chapter 6 Water Systems
-            {"WA2016-741", "WA2019-610" }, // Understanding Ele. Wire Dia.
+            {"WA2016-741", "WA2019-610" }, // Understanding Ele. Wire Dia. 9.28.2019
         };
     }
 }
