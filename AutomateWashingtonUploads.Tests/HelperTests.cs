@@ -21,17 +21,23 @@ namespace AutomateWashingtonUploads.Tests
         }
 
         [TestMethod]
-        public void ConvertDataToStringList_ShouldReturnListWithCountSameAsRows()
+        public void ListToCompletionList_ShouldReturnListWithCorrectElements()
         {
-            // this method may be currently untestable
-
             // arrange
-            // var data = TestData.GetMockRawData();
+            Completion expected = new Completion();
+            expected.Course = "WA2016-240";
+            expected.Name = "Test1, Test1";
+            expected.License = "OOOOOOOOOOOO";
+            expected.Date = "2019-03-19";
 
             // act
-            // var actual = Helper.ConvertDataToStringList(data);
-
+            var rawCompletions = TestData.GetMockCompletions();
+            var actual = Helper.ListToCompletionList(rawCompletions)[0];
             // assert
+            Assert.AreEqual(expected.Course, actual.Course);
+            Assert.AreEqual(expected.Name, actual.Name);
+            Assert.AreEqual(expected.License, actual.License);
+            Assert.AreEqual(expected.Date, actual.Date);
         }
     }
 }

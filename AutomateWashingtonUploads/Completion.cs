@@ -8,9 +8,11 @@ namespace AutomateWashingtonUploads
 {
     public class Completion
     {
-        public string course;
-        public string date;
-        public string license;
-        public string name;
+        public string Course { get; set; }
+        public string Date { get; set; }
+        public string License { get; set; }
+        public string Name { get; set; }
+
+        public Completion() { }
     }
 }

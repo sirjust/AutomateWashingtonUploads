@@ -26,10 +26,10 @@ namespace AutomateWashingtonUploads
             for (int i = 0; i < dividedStrings.Count - 1; i++)
             {
                 Completion completion = new Completion();
-                completion.course = dividedStrings[i][0];
-                completion.date = dividedStrings[i][1];
-                completion.license = dividedStrings[i][2];
-                completion.name = dividedStrings[i][3];
+                completion.Course = dividedStrings[i][0];
+                completion.Date = dividedStrings[i][1];
+                completion.License = dividedStrings[i][2];
+                completion.Name = dividedStrings[i][3];
                 myCompletionList.Add(completion);
             }
             return myCompletionList;
