@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AutomateWashingtonUploads.Tests
@@ -17,6 +18,20 @@ namespace AutomateWashingtonUploads.Tests
 
             // assert
             Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void ConvertDataToStringList_ShouldReturnListWithCountSameAsRows()
+        {
+            // this method may be currently untestable
+
+            // arrange
+            // var data = TestData.GetMockRawData();
+
+            // act
+            // var actual = Helper.ConvertDataToStringList(data);
+
+            // assert
         }
     }
 }

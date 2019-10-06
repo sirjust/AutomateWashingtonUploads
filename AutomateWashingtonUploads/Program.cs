@@ -1,3 +1,4 @@
+using OpenQA.Selenium.Firefox;
 using System;
 using System.Collections.Generic;
 
@@ -15,8 +16,10 @@ namespace AutomateWashingtonUploads
             var finishedList = Helper.ListToCompletionList(convertedList);
 
             // send sanitized data to uploader, iterate and upload each entry
-            UploadTask uploadTask = new UploadTask();
-            uploadTask.InputCompletions(finishedList);
+            //UploadTask uploadTask = new UploadTask();
+            //uploadTask.InputCompletions(finishedList);
+            Uploader uploader = new Uploader(new FirefoxDriver(@"../../../packages/Selenium.Firefox.WebDriver.0.24.0/driver/"), new LoginInfo());
+            uploader.InputCompletions(finishedList);
 
             // the log file is located in the bin/debug folder, it is called log.txt
             Console.WriteLine("\nYour uploads are complete. Please check the log file for any errors.");
