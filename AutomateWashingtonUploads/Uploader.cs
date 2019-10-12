@@ -11,7 +11,6 @@ namespace AutomateWashingtonUploads
     public class Uploader
     {
         IWebDriver _driver;
-        readonly string _location = @"../../../packages/Selenium.Firefox.WebDriver.0.24.0/driver/";
         readonly string _url = "https://secureaccess.wa.gov/myAccess/saw/select.do";
         readonly LoginInfo _loginInfo;
 
@@ -28,14 +27,11 @@ namespace AutomateWashingtonUploads
 
             try
             {
-                IWebElement loginButton = wait.Until(d => d.FindElement(By.XPath("//input[@value='SUBMIT']")));
-                loginButton.Click();
-                IWebElement accessButton = wait.Until(d => d.FindElement(By.XPath("//div[@class='table-row table-row-odd']//input[@value='ACCESS']")));
-                accessButton.Click();
+                wait.Until(d => d.FindElement(By.XPath("//input[@value='SUBMIT']"))).Click();
+                wait.Until(d => d.FindElement(By.XPath("//div[@class='table-row table-row-odd']//input[@value='ACCESS']"))).Click();
             } catch
             {
-                IWebElement tradeReporting = wait.Until(d => d.FindElement(By.XPath("//a[contains(text(),'Trades Education Roster Reporting System')]")));
-                tradeReporting.Click();
+                wait.Until(d => d.FindElement(By.XPath("//a[contains(text(),'Trades Education Roster Reporting System')]"))).Click();
             }
 
             IWebElement keepGoing = wait.Until(d=> d.FindElement(By.XPath("//input[@value='CONTINUE']")));
@@ -46,6 +42,8 @@ namespace AutomateWashingtonUploads
                 // from here we loop through each completion
                 string courseNumber = completion.Course;
                 string license = completion.License;
+                DateTime.TryParse(completion.Date, out DateTime completionDate);
+
                 // check length of license
                 try
                 {
@@ -65,13 +63,6 @@ namespace AutomateWashingtonUploads
                 {
                     license = Helper.ChangeSecondToLastCharacter(license);
                 }
-                string dateString = completion.Date;
-                string[] splitUpDate = dateString.Split('-');
-                int year = int.Parse(splitUpDate[0]);
-                int month = int.Parse(splitUpDate[1]);
-                int day = int.Parse(splitUpDate[2]);
-                int numberOfDownClicks = 0;
-                DateTime completionDate = new DateTime(year, month, day);
 
                 if (PlumbingCourses.Old_New_Courses.ContainsKey(courseNumber))
                 {
@@ -80,14 +71,7 @@ namespace AutomateWashingtonUploads
 
                 // if the plumbing courses array has a value that matches completion.course, click down 10 times, otherwise it is
                 // an electrical course, and the variable is 2
-                if (PlumbingCourses.WAPlumbingCourses.Contains(courseNumber))
-                {
-                    numberOfDownClicks = 10;
-                }
-                else
-                {
-                    numberOfDownClicks = 2;
-                }
+                int numberOfDownClicks = PlumbingCourses.WAPlumbingCourses.Contains(courseNumber) ? 10 : 2;
 
                 // if the course isn't in the plumbing array or an electrical course, it will be handled by the catch block
                 try
@@ -118,11 +102,10 @@ namespace AutomateWashingtonUploads
                 }
 
                 // if the completion date is incorrect for the course the program will log it and go to the next completion
-                // this occurs with older electrical courses, where the completion date is out of the range of course validity
                 try
                 {
                     IWebElement dateInput = wait.Until(d=> d.FindElement(By.Id("txtComplDt")));
-                    dateInput.SendKeys(String.Format("{0:MM/dd/yyyy}", completionDate));
+                    dateInput.SendKeys(string.Format("{0:MM/dd/yyyy}", completionDate));
                 }
                 catch(Exception ex)
                 {
@@ -164,10 +147,7 @@ namespace AutomateWashingtonUploads
 
         private void LoginToWebsite()
         {
-            _driver = new FirefoxDriver(_location)
-            {
-                Url = _url
-            };
+            _driver.Url = _url;
             _driver.Manage().Window.Maximize();
 
             IWebElement usernameInput = _driver.FindElement(By.Id("username"));

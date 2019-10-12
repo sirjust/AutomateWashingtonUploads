@@ -21,6 +21,36 @@ namespace AutomateWashingtonUploads.Tests
         }
 
         [TestMethod]
+        public void IsLicenseTwelveCharacters_ShouldReturnFalseIfWrongAmount()
+        {
+            // arrange
+            var expected = false;
+
+            // act
+            var result1 = Helper.IsLicenseTwelveCharacters("1111111111111111");
+            var result2 = Helper.IsLicenseTwelveCharacters("1111");
+
+            // assert
+            Assert.AreEqual(expected, result1);
+            Assert.AreEqual(expected, result2);
+        }
+
+        [TestMethod]
+        public void IsLicenseTwelveCharacters_ShouldReturnTrueIfCorrectLength()
+        {
+            // arrange
+            var expected = true;
+
+            // act
+            var result1 = Helper.IsLicenseTwelveCharacters("111111111111");
+            var result2 = Helper.IsLicenseTwelveCharacters("000000000000");
+
+            // assert
+            Assert.AreEqual(expected, result1);
+            Assert.AreEqual(expected, result2);
+        }
+
+        [TestMethod]
         public void ListToCompletionList_ShouldReturnListWithCorrectElements()
         {
             // arrange
