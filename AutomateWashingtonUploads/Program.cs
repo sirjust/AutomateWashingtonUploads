@@ -16,8 +16,6 @@ namespace AutomateWashingtonUploads
             var finishedList = Helper.ListToCompletionList(convertedList);
 
             // send sanitized data to uploader, iterate and upload each entry
-            //UploadTask uploadTask = new UploadTask();
-            //uploadTask.InputCompletions(finishedList);
             Uploader uploader = new Uploader(new FirefoxDriver(@"../../../packages/Selenium.Firefox.WebDriver.0.24.0/driver/"), new LoginInfo());
             uploader.InputCompletions(finishedList);
 

@@ -46,8 +46,8 @@ namespace AutomateWashingtonUploads
             foreach(Completion completion in completions)
             {
                 // from here we loop through each completion
-                string courseNumber = completion.course;
-                string license = completion.license;
+                string courseNumber = completion.Course;
+                string license = completion.License;
                 // check length of license
                 try
                 {
@@ -62,13 +62,12 @@ namespace AutomateWashingtonUploads
                     // we are on the correct page so we can simply continue
                     continue;
                 }
-
                 // check if the user has put in a false value for the second to last character
                 if (license[10] == '0')
                 {
                     license = Helper.ChangeSecondToLastCharacter(license);
                 }
-                string dateString = completion.date;
+                string dateString = completion.Date;
                 string[] splitUpDate = dateString.Split('-');
                 int year = int.Parse(splitUpDate[0]);
                 int month = int.Parse(splitUpDate[1]);
