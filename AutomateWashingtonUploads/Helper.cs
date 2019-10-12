@@ -53,5 +53,11 @@ namespace AutomateWashingtonUploads
             license[10] = 'O';
             return new string(license);
         }
+
+        public static bool IsLicenseTwelveCharacters(string license)
+        {
+            if (license.Length == 12) return true;
+            return false;
+        }
     }
 }

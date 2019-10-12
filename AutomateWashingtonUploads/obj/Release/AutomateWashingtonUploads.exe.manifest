@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AutomateWashingtonUploads.exe" size="16856">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="AutomateWashingtonUploads.exe" size="14296">
       <assemblyIdentity name="AutomateWashingtonUploads" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>AaT2c+FDm9cLZQzXrNEHCsao3XbZmHTFoL+L2QD0LWo=</dsig:DigestValue>
+        <dsig:DigestValue>ZVJFnZVWwdjJaonLTr9sIzAvNcWuHtLyj65Ag3puEXA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
