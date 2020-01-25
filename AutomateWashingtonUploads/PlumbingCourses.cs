@@ -44,7 +44,10 @@ namespace AutomateWashingtonUploads
             "WA2019-433",
             "WA2019-434",
             "WA2019-435",
-            "WA2019-610"
+            "WA2019-610",
+            "WA2019-040",
+            "WA2020-054",
+            "WA2020-055"
         };
 
         public static Dictionary<string, string> Old_New_Courses = new Dictionary<string, string>{
@@ -59,6 +62,8 @@ namespace AutomateWashingtonUploads
             {"WA2016-491", "WA2019-435" }, // Chapter 7 Sanitary Drains
             {"WA2016-587", "WA2019-434" }, // Chapter 6 Water Systems
             {"WA2016-741", "WA2019-610" }, // Understanding Ele. Wire Dia. 9.28.2019
+            {"WA2017-004", "WA2020-054" }, // 2015 UPC Chapter 9 Venting
+            {"WA2017-116", "WA2020-055" }  // 2015 UPC Update 1.23.2019
         };
     }
 }
