@@ -19,6 +19,9 @@ namespace AutomateWashingtonUploads
             Uploader uploader = new Uploader(new FirefoxDriver(@"../../../packages/Selenium.Firefox.WebDriver.0.24.0/driver/"), new LoginInfo());
             uploader.InputCompletions(finishedList);
 
+            // now we will send an email with the log file
+            // Helper.SendEmail(Logger.GetReader(), new LoginInfo());
+
             // the log file is located in the bin/debug folder, it is called log.txt
             Console.WriteLine("\nYour uploads are complete. Please check the log file for any errors.");
             Console.Read();

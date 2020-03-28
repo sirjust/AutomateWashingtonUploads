@@ -152,8 +152,8 @@ namespace AutomateWashingtonUploads
 
             IWebElement usernameInput = _driver.FindElement(By.Id("username"));
             IWebElement passwordInput = _driver.FindElement(By.Id("password"));
-            usernameInput.SendKeys(_loginInfo.id);
-            passwordInput.SendKeys(_loginInfo.password);
+            usernameInput.SendKeys(_loginInfo.Id);
+            passwordInput.SendKeys(_loginInfo.Password);
         }
     }
 }
