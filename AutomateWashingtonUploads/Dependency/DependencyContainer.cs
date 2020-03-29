@@ -1,5 +1,7 @@
 ﻿using AutomateWashingtonUploads.StaticData;
 using Ninject.Modules;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Firefox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +14,8 @@ namespace AutomateWashingtonUploads.Dependency
     {
         public override void Load()
         {
-            this.Bind<ILoginInfo>().To<LoginInfo>();
+            Bind<ILoginInfo>().To<LoginInfo>();
+            Bind<IWebDriver>().To<FirefoxDriver>();
         }
     }
 }

@@ -5,6 +5,8 @@ using AutomateWashingtonUploads.StaticData;
 using AutomateWashingtonUploads.Helpers;
 using Ninject;
 using AutomateWashingtonUploads.Dependency;
+using System.Reflection;
+using OpenQA.Selenium;
 
 namespace AutomateWashingtonUploads
 {
@@ -23,7 +25,7 @@ namespace AutomateWashingtonUploads
             var finishedList = DataHelper.ListToCompletionList(convertedList);
 
             // send sanitized data to uploader, iterate and upload each entry
-            Uploader uploader = new Uploader(new FirefoxDriver(@"../../../packages/Selenium.Firefox.WebDriver.0.24.0/driver/"), loginInfo);
+            Uploader uploader = new Uploader(kernel.Get<IWebDriver>(), loginInfo);
             uploader.InputCompletions(finishedList);
 
             // now we will send an email with the log file
