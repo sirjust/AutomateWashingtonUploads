@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AutomateWashingtonUploads
+namespace AutomateWashingtonUploads.StaticData
 {
     public static class PlumbingCourses
     {

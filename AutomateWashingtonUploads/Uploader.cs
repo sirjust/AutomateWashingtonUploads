@@ -5,13 +5,14 @@ using System.Linq;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Firefox;
+using AutomateWashingtonUploads.StaticData;
+using AutomateWashingtonUploads.Helpers;
 
 namespace AutomateWashingtonUploads
 {
     public class Uploader
     {
         IWebDriver _driver;
-        readonly string _url = "https://secureaccess.wa.gov/myAccess/saw/select.do";
         readonly LoginInfo _loginInfo;
 
         public Uploader(IWebDriver driver, LoginInfo loginInfo)
@@ -47,7 +48,7 @@ namespace AutomateWashingtonUploads
                 // check length of license
                 try
                 {
-                    if (!Helper.IsLicenseTwelveCharacters(license))
+                    if (!ValidationHelper.IsLicenseTwelveCharacters(license))
                     {
                         throw new Exception("", new Exception("The license is an incorrect length."));
                     }
@@ -61,7 +62,7 @@ namespace AutomateWashingtonUploads
                 // check if the user has put in a false value for the second to last character
                 if (license[10] == '0')
                 {
-                    license = Helper.ChangeSecondToLastCharacter(license);
+                    license = ValidationHelper.ChangeSecondToLastCharacter(license);
                 }
 
                 if (PlumbingCourses.Old_New_Courses.ContainsKey(courseNumber))
@@ -147,7 +148,7 @@ namespace AutomateWashingtonUploads
 
         private void LoginToWebsite()
         {
-            _driver.Url = _url;
+            _driver.Url = _loginInfo.LoginUrl;
             _driver.Manage().Window.Maximize();
 
             IWebElement usernameInput = _driver.FindElement(By.Id("username"));

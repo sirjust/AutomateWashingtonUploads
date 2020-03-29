@@ -1,6 +1,8 @@
 using OpenQA.Selenium.Firefox;
 using System;
 using System.Collections.Generic;
+using AutomateWashingtonUploads.StaticData;
+using AutomateWashingtonUploads.Helpers;
 
 namespace AutomateWashingtonUploads
 {
@@ -10,10 +12,10 @@ namespace AutomateWashingtonUploads
         {
             // take user input and convert to a string list
             Console.WriteLine("Please input completion data, then press Enter twice: ");
-            List<string> convertedList = Helper.ConvertDataToStringList();
+            List<string> convertedList = DataHelper.ConvertDataToStringList();
 
             // convert string list to completion list which can be used by the upload task
-            var finishedList = Helper.ListToCompletionList(convertedList);
+            var finishedList = DataHelper.ListToCompletionList(convertedList);
 
             // send sanitized data to uploader, iterate and upload each entry
             Uploader uploader = new Uploader(new FirefoxDriver(@"../../../packages/Selenium.Firefox.WebDriver.0.24.0/driver/"), new LoginInfo());

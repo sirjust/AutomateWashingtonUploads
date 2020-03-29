@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AutomateWashingtonUploads.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AutomateWashingtonUploads.Tests
@@ -14,7 +15,7 @@ namespace AutomateWashingtonUploads.Tests
             var expected = "WONG*JK864O5";
 
             // act
-            var result = Helper.ChangeSecondToLastCharacter("WONG*JK86405");
+            var result = ValidationHelper.ChangeSecondToLastCharacter("WONG*JK86405");
 
             // assert
             Assert.AreEqual(expected, result);
@@ -27,8 +28,8 @@ namespace AutomateWashingtonUploads.Tests
             var expected = false;
 
             // act
-            var result1 = Helper.IsLicenseTwelveCharacters("1111111111111111");
-            var result2 = Helper.IsLicenseTwelveCharacters("1111");
+            var result1 = ValidationHelper.IsLicenseTwelveCharacters("1111111111111111");
+            var result2 = ValidationHelper.IsLicenseTwelveCharacters("1111");
 
             // assert
             Assert.AreEqual(expected, result1);
@@ -42,8 +43,8 @@ namespace AutomateWashingtonUploads.Tests
             var expected = true;
 
             // act
-            var result1 = Helper.IsLicenseTwelveCharacters("111111111111");
-            var result2 = Helper.IsLicenseTwelveCharacters("000000000000");
+            var result1 = ValidationHelper.IsLicenseTwelveCharacters("111111111111");
+            var result2 = ValidationHelper.IsLicenseTwelveCharacters("000000000000");
 
             // assert
             Assert.AreEqual(expected, result1);
@@ -62,7 +63,7 @@ namespace AutomateWashingtonUploads.Tests
 
             // act
             var rawCompletions = TestData.GetMockCompletions();
-            var actual = Helper.ListToCompletionList(rawCompletions)[0];
+            var actual = DataHelper.ListToCompletionList(rawCompletions)[0];
             // assert
             Assert.AreEqual(expected.Course, actual.Course);
             Assert.AreEqual(expected.Name, actual.Name);
