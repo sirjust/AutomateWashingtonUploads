@@ -87,6 +87,7 @@
     <Compile Include="Helpers\DataHelper.cs" />
     <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="Helpers\ValidationHelper.cs" />
+    <Compile Include="IUploader.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="StaticData\ILoginInfo.cs" />
     <Compile Include="StaticData\LoginInfo.cs" />
