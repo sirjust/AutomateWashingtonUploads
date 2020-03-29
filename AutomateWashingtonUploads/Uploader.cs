@@ -57,8 +57,7 @@ namespace AutomateWashingtonUploads
                     courseNumber = PlumbingCourses.Old_New_Courses[courseNumber];
                 }
 
-                // if the plumbing courses array has a value that matches completion.course, click down 10 times, otherwise it is
-                // an electrical course, and the variable is 2
+                // if the plumbing courses array has a value that matches completion.course, click down 10 times, otherwise it is an electrical course, and the variable is 2
                 int numberOfDownClicks = PlumbingCourses.WAPlumbingCourses.Contains(courseNumber) ? 10 : 2;
 
                 // if the course isn't in the plumbing array or an electrical course, it will be handled by the catch block
@@ -71,14 +70,9 @@ namespace AutomateWashingtonUploads
                         numberOfDownClicks--;
                     }
 
-                    IWebElement courseField = _wait.Until(d=>d.FindElement(By.Id("txtClassID")));
-                    courseField.SendKeys(courseNumber);
-
-                    IWebElement btnNext = _wait.Until(d=>d.FindElement(By.Id("btnNext")));
-                    btnNext.Click();
-
-                    IWebElement anchor = _wait.Until(d => d.FindElement(By.PartialLinkText("HVAC")));
-                    anchor.Click();
+                    _wait.Until(d=>d.FindElement(By.Id("txtClassID"))).SendKeys(courseNumber);
+                    _wait.Until(d=>d.FindElement(By.Id("btnNext"))).Click();
+                    _wait.Until(d => d.FindElement(By.PartialLinkText("HVAC"))).Click();
                 }
                 catch(Exception ex)
                 {
@@ -92,30 +86,25 @@ namespace AutomateWashingtonUploads
                 // if the completion date is incorrect for the course the program will log it and go to the next completion
                 try
                 {
-                    IWebElement dateInput = _wait.Until(d=> d.FindElement(By.Id("txtComplDt")));
-                    dateInput.SendKeys(string.Format("{0:MM/dd/yyyy}", completionDate));
+                    _wait.Until(d=> d.FindElement(By.Id("txtComplDt"))).SendKeys(string.Format("{0:MM/dd/yyyy}", completionDate));
                 }
                 catch(Exception ex)
                 {
                     Logger.LogException(ex, completion);
                     //then go back to the previous page
-                    IWebElement goBack = _driver.FindElement(By.Id("btnPrev"));
-                    goBack.Click();
+                    _driver.FindElement(By.Id("btnPrev")).Click();
                     continue;
                 }
 
                 try
                 {
-                    IWebElement createRoster = _wait.Until(d => d.FindElement(By.Id("btnGetRoster")));
-                    createRoster.Click();
-                    IWebElement inputLicense = _wait.Until(d=> d.FindElement(By.Id("txtLicense")));
-                    inputLicense.SendKeys(license);
-                    IWebElement findLicensee = _wait.Until(d=> d.FindElement(By.Id("btnPeople")));
-                    findLicensee.Click();
+                    // here we create a roster and find the license
+                    _wait.Until(d => d.FindElement(By.Id("btnGetRoster"))).Click();
+                    _wait.Until(d=> d.FindElement(By.Id("txtLicense"))).SendKeys(license);
+                    _wait.Until(d=> d.FindElement(By.Id("btnPeople"))).Click();
 
                     // next we have to submit the roster
-                    IWebElement addToRoster = _wait.Until<IWebElement>(d=> d.FindElement(By.Id("btnTransferToRoster")));
-                    addToRoster.Click();
+                    _wait.Until(d=> d.FindElement(By.Id("btnTransferToRoster"))).Click();
                 }
                 catch(Exception ex)
                 {
@@ -124,8 +113,7 @@ namespace AutomateWashingtonUploads
                 finally
                 {
                     //then go back to the previous page
-                    IWebElement goBack = _wait.Until(d=> d.FindElement(By.Id("btnPrev")));
-                    goBack.Click();
+                    _wait.Until(d=> d.FindElement(By.Id("btnPrev"))).Click();
                 }
                 //loop again until the end
             }
@@ -138,10 +126,8 @@ namespace AutomateWashingtonUploads
             _driver.Url = _loginInfo.LoginUrl;
             _driver.Manage().Window.Maximize();
 
-            IWebElement usernameInput = _driver.FindElement(By.Id("username"));
-            IWebElement passwordInput = _driver.FindElement(By.Id("password"));
-            usernameInput.SendKeys(_loginInfo.Id);
-            passwordInput.SendKeys(_loginInfo.Password);
+            _driver.FindElement(By.Id("username")).SendKeys(_loginInfo.Id);
+            _driver.FindElement(By.Id("password")).SendKeys(_loginInfo.Password);
 
             try
             {
