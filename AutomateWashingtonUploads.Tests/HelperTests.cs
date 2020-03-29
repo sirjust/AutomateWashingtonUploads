@@ -12,10 +12,10 @@ namespace AutomateWashingtonUploads.Tests
         public void ChangeSecondToLastCharacter_ShouldChangeCharacterToO()
         {
             // arrange
-            var expected = "WONG*JK864O5";
+            var expected = "ABCD*EF864O5";
 
             // act
-            var result = ValidationHelper.ChangeSecondToLastCharacter("WONG*JK86405");
+            var result = ValidationHelper.ChangeSecondToLastCharacter("ABCD*EF86405");
 
             // assert
             Assert.AreEqual(expected, result);

@@ -8,7 +8,7 @@ namespace AutomateWashingtonUploads.Helpers
 {
     public static class EmailHelper
     {
-        public static void SendEmail(StreamReader reader, LoginInfo info)
+        public static void SendEmail(StreamReader reader, ILoginInfo info)
         {
             try
             {

@@ -62,6 +62,9 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -80,10 +83,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Completion.cs" />
+    <Compile Include="Dependency\DependencyContainer.cs" />
     <Compile Include="Helpers\DataHelper.cs" />
     <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="Helpers\ValidationHelper.cs" />
     <Compile Include="Logger.cs" />
+    <Compile Include="StaticData\ILoginInfo.cs" />
     <Compile Include="StaticData\LoginInfo.cs" />
     <Compile Include="StaticData\PlumbingCourses.cs" />
     <Compile Include="Program.cs" />
@@ -92,7 +97,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="AutomateWashingtonUploads_TemporaryKey.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

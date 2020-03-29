@@ -13,9 +13,9 @@ namespace AutomateWashingtonUploads
     public class Uploader
     {
         IWebDriver _driver;
-        readonly LoginInfo _loginInfo;
+        ILoginInfo _loginInfo;
 
-        public Uploader(IWebDriver driver, LoginInfo loginInfo)
+        public Uploader(IWebDriver driver, ILoginInfo loginInfo)
         {
             _driver = driver;
             _loginInfo = loginInfo;
