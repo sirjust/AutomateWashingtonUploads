@@ -86,6 +86,8 @@
     <Compile Include="Dependency\DependencyContainer.cs" />
     <Compile Include="Helpers\DataHelper.cs" />
     <Compile Include="Helpers\EmailHelper.cs" />
+    <Compile Include="Helpers\ErrorHelper.cs" />
+    <Compile Include="Helpers\IErrorHelper.cs" />
     <Compile Include="Helpers\ValidationHelper.cs" />
     <Compile Include="IUploader.cs" />
     <Compile Include="Logger.cs" />

@@ -13,16 +13,19 @@ namespace AutomateWashingtonUploads
         IWebDriver _driver;
         ILoginInfo _loginInfo;
         WebDriverWait _wait;
+        IErrorHelper _errorHelper;
 
         public Uploader(IWebDriver driver, ILoginInfo loginInfo)
         {
             _driver = driver;
             _loginInfo = loginInfo;
             _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            _errorHelper = new ErrorHelper(_driver);
         }
 
         public void InputCompletions(List<Completion> completions)
         {
+            string errorMessage = "";
             LoginToWebsite();
 
             foreach(Completion completion in completions)
@@ -76,21 +79,25 @@ namespace AutomateWashingtonUploads
                 }
                 catch(Exception ex)
                 {
-                    Logger.LogException(ex, completion);
-                    //then go back to the previous page
-                    IWebElement goBack = _driver.FindElement(By.Id("btnPrev"));
-                    goBack.Click();
+                    if (_errorHelper.CourseNumberNotFound())
+                    {
+                        errorMessage = $"The following course was not found: {completion.Course}";
+                    }
+                    Logger.LogException(ex, completion, errorMessage);
+                    _driver.Navigate().GoToUrl(_driver.Url);
+                    //_driver.Navigate().Refresh();
+                    //_driver.SwitchTo().Alert().Accept();
                     continue;
                 }
 
-                // if the completion date is incorrect for the course the program will log it and go to the next completion
+                // if the course is not found the program will log it and go to the next completion
                 try
                 {
                     _wait.Until(d=> d.FindElement(By.Id("txtComplDt"))).SendKeys(string.Format("{0:MM/dd/yyyy}", completionDate));
                 }
                 catch(Exception ex)
                 {
-                    Logger.LogException(ex, completion);
+                    Logger.LogException(ex, completion, errorMessage);
                     //then go back to the previous page
                     _driver.FindElement(By.Id("btnPrev")).Click();
                     continue;
@@ -108,7 +115,15 @@ namespace AutomateWashingtonUploads
                 }
                 catch(Exception ex)
                 {
-                    Logger.LogException(ex, completion);
+                    if (_errorHelper.CourseOutOfDateRange())
+                    {
+                        errorMessage = "The Completion Date is out of the class range.";
+                    }
+                    if (_errorHelper.HasInvalidLicense()) 
+                    {
+                        errorMessage = $"License number {completion.License} is invalid.";
+                    }
+                    Logger.LogException(ex, completion, errorMessage);
                 }
                 finally
                 {
