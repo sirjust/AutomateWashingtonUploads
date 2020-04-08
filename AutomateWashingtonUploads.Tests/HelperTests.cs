@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using AutomateWashingtonUploads.Helpers;
+﻿using AutomateWashingtonUploads.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AutomateWashingtonUploads.Tests

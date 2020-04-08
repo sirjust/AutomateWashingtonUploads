@@ -1,10 +1,4 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutomateWashingtonUploads.Helpers
 {
@@ -45,12 +39,30 @@ namespace AutomateWashingtonUploads.Helpers
 
         public bool HasAlreadyUsedCourse()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var text = _driver.FindElement(By.Id("lblError")).GetAttribute("innerText");
+                if (text.Contains("has already used this class for this renewal.")) return true;
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public bool LienseAlreadyOnRoster()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var text = _driver.FindElement(By.Id("lblError")).GetAttribute("innerText");
+                if (text.Contains("is already on this roster.")) return true;
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public bool CourseNumberNotFound()

@@ -85,8 +85,6 @@ namespace AutomateWashingtonUploads
                     }
                     Logger.LogException(ex, completion, errorMessage);
                     _driver.Navigate().GoToUrl(_driver.Url);
-                    //_driver.Navigate().Refresh();
-                    //_driver.SwitchTo().Alert().Accept();
                     continue;
                 }
 
@@ -115,14 +113,11 @@ namespace AutomateWashingtonUploads
                 }
                 catch(Exception ex)
                 {
-                    if (_errorHelper.CourseOutOfDateRange())
-                    {
-                        errorMessage = "The Completion Date is out of the class range.";
-                    }
-                    if (_errorHelper.HasInvalidLicense()) 
-                    {
-                        errorMessage = $"License number {completion.License} is invalid.";
-                    }
+                    if (_errorHelper.CourseOutOfDateRange()) errorMessage = "The Completion Date is out of the class range.";
+                    if (_errorHelper.HasInvalidLicense()) errorMessage = $"License number {completion.License} is invalid.";
+                    if (_errorHelper.LienseAlreadyOnRoster()) errorMessage = $"License number {completion.License} is already on the roster.";
+                    if (_errorHelper.HasAlreadyUsedCourse()) errorMessage = $"License number {completion.License} has already used course {completion.Course}.";
+
                     Logger.LogException(ex, completion, errorMessage);
                 }
                 finally
