@@ -2,10 +2,10 @@
 {
     public interface IErrorHelper
     {
-        bool CourseNumberNotFound();
-        bool CourseOutOfDateRange();
-        bool HasAlreadyUsedCourse();
-        bool HasInvalidLicense();
-        bool LienseAlreadyOnRoster();
+        bool CourseNumberNotFound(string text);
+        bool CourseOutOfDateRange(string text);
+        bool HasAlreadyUsedCourse(string text);
+        bool HasInvalidLicense(string text);
+        bool LienseAlreadyOnRoster(string text);
     }
 }

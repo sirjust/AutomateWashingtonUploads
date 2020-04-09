@@ -1,4 +1,5 @@
-﻿using AutomateWashingtonUploads.StaticData;
+﻿using AutomateWashingtonUploads.Helpers;
+using AutomateWashingtonUploads.StaticData;
 using Ninject.Modules;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
@@ -12,6 +13,7 @@ namespace AutomateWashingtonUploads.Dependency
             Bind<ILoginInfo>().To<LoginInfo>();
             Bind<IWebDriver>().To<FirefoxDriver>();
             Bind<IUploader>().To<Uploader>();
+            Bind<IErrorHelper>().To<ErrorHelper>();
         }
     }
 }

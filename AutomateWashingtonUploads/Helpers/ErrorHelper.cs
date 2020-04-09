@@ -4,79 +4,34 @@ namespace AutomateWashingtonUploads.Helpers
 {
     public class ErrorHelper : IErrorHelper
     {
-        IWebDriver _driver;
-        public ErrorHelper(IWebDriver driver)
+        public bool HasInvalidLicense(string text)
         {
-            _driver = driver;
-        }
-        public bool HasInvalidLicense()
-        {
-            try
-            {
-                var text = _driver.FindElement(By.Id("lblError")).GetAttribute("innerText");
-                if (text == "No Licenses Found.") return true;
-                return false;
-            }
-            catch
-            {
-                return false;
-            }
+            if (text == "No Licenses Found.") return true;
+            return false;
         }
 
-        public bool CourseOutOfDateRange()
+        public bool CourseOutOfDateRange(string text)
         {
-            try
-            {
-                var text = _driver.FindElement(By.Id("lblError")).GetAttribute("innerText");
-                if (text == "The Completion Date is out of the class range.") return true;
-                return false;
-            }
-            catch
-            {
-                return false;
-            }
+            if (text == "The Completion Date is out of the class range.") return true;
+            return false;
         }
 
-        public bool HasAlreadyUsedCourse()
+        public bool HasAlreadyUsedCourse(string text)
         {
-            try
-            {
-                var text = _driver.FindElement(By.Id("lblError")).GetAttribute("innerText");
-                if (text.Contains("has already used this class for this renewal.")) return true;
-                return false;
-            }
-            catch
-            {
-                return false;
-            }
+            if (text.Contains("has already used this class for this renewal.")) return true;
+            return false;
         }
 
-        public bool LienseAlreadyOnRoster()
+        public bool LienseAlreadyOnRoster(string text)
         {
-            try
-            {
-                var text = _driver.FindElement(By.Id("lblError")).GetAttribute("innerText");
-                if (text.Contains("is already on this roster.")) return true;
-                return false;
-            }
-            catch
-            {
-                return false;
-            }
+            if (text.Contains("is already on this roster.")) return true;
+            return false;
         }
 
-        public bool CourseNumberNotFound()
+        public bool CourseNumberNotFound(string text)
         {
-            try
-            {
-                var text = _driver.FindElement(By.Id("lblError")).GetAttribute("innerText");
-                if (text == "Invalid course identifier specified") return true;
-                return false;
-            }
-            catch
-            {
-                return false;
-            }
+            if (text == "Invalid course identifier specified") return true;
+            return false;
         }
     }
 }

@@ -15,12 +15,12 @@ namespace AutomateWashingtonUploads
         WebDriverWait _wait;
         IErrorHelper _errorHelper;
 
-        public Uploader(IWebDriver driver, ILoginInfo loginInfo)
+        public Uploader(IWebDriver driver, ILoginInfo loginInfo, IErrorHelper errorHelper)
         {
             _driver = driver;
             _loginInfo = loginInfo;
             _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-            _errorHelper = new ErrorHelper(_driver);
+            _errorHelper = errorHelper;
         }
 
         public void InputCompletions(List<Completion> completions)
@@ -79,7 +79,8 @@ namespace AutomateWashingtonUploads
                 }
                 catch(Exception ex)
                 {
-                    if (_errorHelper.CourseNumberNotFound())
+                    var text = _driver.FindElement(By.Id("lblError")).GetAttribute("innerText");
+                    if (_errorHelper.CourseNumberNotFound(text))
                     {
                         errorMessage = $"The following course was not found: {completion.Course}";
                     }
@@ -113,10 +114,11 @@ namespace AutomateWashingtonUploads
                 }
                 catch(Exception ex)
                 {
-                    if (_errorHelper.CourseOutOfDateRange()) errorMessage = "The Completion Date is out of the class range.";
-                    if (_errorHelper.HasInvalidLicense()) errorMessage = $"License number {completion.License} is invalid.";
-                    if (_errorHelper.LienseAlreadyOnRoster()) errorMessage = $"License number {completion.License} is already on the roster.";
-                    if (_errorHelper.HasAlreadyUsedCourse()) errorMessage = $"License number {completion.License} has already used course {completion.Course}.";
+                    var text = _driver.FindElement(By.Id("lblError")).GetAttribute("innerText");
+                    if (_errorHelper.CourseOutOfDateRange(text)) errorMessage = "The Completion Date is out of the class range.";
+                    if (_errorHelper.HasInvalidLicense(text)) errorMessage = $"License number {completion.License} is invalid.";
+                    if (_errorHelper.LienseAlreadyOnRoster(text)) errorMessage = $"License number {completion.License} is already on the roster.";
+                    if (_errorHelper.HasAlreadyUsedCourse(text)) errorMessage = $"License number {completion.License} has already used course {completion.Course}.";
 
                     Logger.LogException(ex, completion, errorMessage);
                 }
