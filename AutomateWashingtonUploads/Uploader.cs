@@ -1,41 +1,32 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
+﻿using AutomateWashingtonUploads.Helpers;
+using AutomateWashingtonUploads.StaticData;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium.Firefox;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AutomateWashingtonUploads
 {
-    public class Uploader
+    public class Uploader : IUploader
     {
         IWebDriver _driver;
-        readonly string _url = "https://secureaccess.wa.gov/myAccess/saw/select.do";
-        readonly LoginInfo _loginInfo;
+        ILoginInfo _loginInfo;
+        WebDriverWait _wait;
+        IErrorHelper _errorHelper;
 
-        public Uploader(IWebDriver driver, LoginInfo loginInfo)
+        public Uploader(IWebDriver driver, ILoginInfo loginInfo, IErrorHelper errorHelper)
         {
             _driver = driver;
             _loginInfo = loginInfo;
+            _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
+            _errorHelper = errorHelper;
         }
 
         public void InputCompletions(List<Completion> completions)
         {
+            string errorMessage = "";
             LoginToWebsite();
-            WebDriverWait wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
-
-            try
-            {
-                wait.Until(d => d.FindElement(By.XPath("//input[@value='SUBMIT']"))).Click();
-                wait.Until(d => d.FindElement(By.XPath("//div[@class='table-row table-row-odd']//input[@value='ACCESS']"))).Click();
-            } catch
-            {
-                wait.Until(d => d.FindElement(By.XPath("//a[contains(text(),'Trades Education Roster Reporting System')]"))).Click();
-            }
-
-            IWebElement keepGoing = wait.Until(d=> d.FindElement(By.XPath("//input[@value='CONTINUE']")));
-            keepGoing.Click();
 
             foreach(Completion completion in completions)
             {
@@ -47,7 +38,7 @@ namespace AutomateWashingtonUploads
                 // check length of license
                 try
                 {
-                    if (!Helper.IsLicenseTwelveCharacters(license))
+                    if (!ValidationHelper.IsLicenseTwelveCharacters(license))
                     {
                         throw new Exception("", new Exception("The license is an incorrect length."));
                     }
@@ -61,7 +52,7 @@ namespace AutomateWashingtonUploads
                 // check if the user has put in a false value for the second to last character
                 if (license[10] == '0')
                 {
-                    license = Helper.ChangeSecondToLastCharacter(license);
+                    license = ValidationHelper.ChangeSecondToLastCharacter(license);
                 }
 
                 if (PlumbingCourses.Old_New_Courses.ContainsKey(courseNumber))
@@ -69,75 +60,72 @@ namespace AutomateWashingtonUploads
                     courseNumber = PlumbingCourses.Old_New_Courses[courseNumber];
                 }
 
-                // if the plumbing courses array has a value that matches completion.course, click down 10 times, otherwise it is
-                // an electrical course, and the variable is 2
+                // if the plumbing courses array has a value that matches completion.course, click down 10 times, otherwise it is an electrical course, and the variable is 2
                 int numberOfDownClicks = PlumbingCourses.WAPlumbingCourses.Contains(courseNumber) ? 10 : 2;
 
                 // if the course isn't in the plumbing array or an electrical course, it will be handled by the catch block
                 try
                 {
-                    IWebElement tradeContainer = wait.Until(d => d.FindElement(By.Id("ddlCourseType")));
+                    IWebElement tradeContainer = _wait.Until(d => d.FindElement(By.Id("ddlCourseType")));
                     while (numberOfDownClicks > 0)
                     {
                         tradeContainer.SendKeys(Keys.Down);
                         numberOfDownClicks--;
                     }
 
-                    IWebElement courseField = wait.Until(d=>d.FindElement(By.Id("txtClassID")));
-                    courseField.SendKeys(courseNumber);
-
-                    IWebElement btnNext = wait.Until(d=>d.FindElement(By.Id("btnNext")));
-                    btnNext.Click();
-
-                    IWebElement anchor = wait.Until<IWebElement>(d => d.FindElement(By.PartialLinkText("HVAC")));
-                    anchor.Click();
+                    _wait.Until(d=>d.FindElement(By.Id("txtClassID"))).SendKeys(courseNumber);
+                    _wait.Until(d=>d.FindElement(By.Id("btnNext"))).Click();
+                    _wait.Until(d => d.FindElement(By.PartialLinkText("HVAC"))).Click();
                 }
                 catch(Exception ex)
                 {
-                    Logger.LogException(ex, completion);
-                    //then go back to the previous page
-                    IWebElement goBack = _driver.FindElement(By.Id("btnPrev"));
-                    goBack.Click();
+                    var text = _driver.FindElement(By.Id("lblError")).GetAttribute("innerText");
+                    if (_errorHelper.CourseNumberNotFound(text))
+                    {
+                        errorMessage = $"The following course was not found: {completion.Course}";
+                    }
+                    Logger.LogException(ex, completion, errorMessage);
+                    _driver.Navigate().GoToUrl(_driver.Url);
                     continue;
                 }
 
-                // if the completion date is incorrect for the course the program will log it and go to the next completion
+                // if the course is not found the program will log it and go to the next completion
                 try
                 {
-                    IWebElement dateInput = wait.Until(d=> d.FindElement(By.Id("txtComplDt")));
-                    dateInput.SendKeys(string.Format("{0:MM/dd/yyyy}", completionDate));
+                    _wait.Until(d=> d.FindElement(By.Id("txtComplDt"))).SendKeys(string.Format("{0:MM/dd/yyyy}", completionDate));
                 }
                 catch(Exception ex)
                 {
-                    Logger.LogException(ex, completion);
+                    Logger.LogException(ex, completion, errorMessage);
                     //then go back to the previous page
-                    IWebElement goBack = _driver.FindElement(By.Id("btnPrev"));
-                    goBack.Click();
+                    _driver.FindElement(By.Id("btnPrev")).Click();
                     continue;
                 }
 
                 try
                 {
-                    IWebElement createRoster = wait.Until(d => d.FindElement(By.Id("btnGetRoster")));
-                    createRoster.Click();
-                    IWebElement inputLicense = wait.Until(d=> d.FindElement(By.Id("txtLicense")));
-                    inputLicense.SendKeys(license);
-                    IWebElement findLicensee = wait.Until(d=> d.FindElement(By.Id("btnPeople")));
-                    findLicensee.Click();
+                    // here we create a roster and find the license
+                    _wait.Until(d => d.FindElement(By.Id("btnGetRoster"))).Click();
+                    _wait.Until(d=> d.FindElement(By.Id("txtLicense"))).SendKeys(license);
+                    _wait.Until(d=> d.FindElement(By.Id("btnPeople"))).Click();
 
                     // next we have to submit the roster
-                    IWebElement addToRoster = wait.Until<IWebElement>(d=> d.FindElement(By.Id("btnTransferToRoster")));
-                    addToRoster.Click();
+                    _wait.Until(d=> d.FindElement(By.Id("btnTransferToRoster"))).Click();
                 }
                 catch(Exception ex)
                 {
-                    Logger.LogException(ex, completion);
+                    var text = _driver.FindElement(By.Id("lblError")).GetAttribute("innerText");
+                    if (_errorHelper.CourseOutOfDateRange(text)) errorMessage = "The Completion Date is out of the class range.";
+                    if (_errorHelper.HasInvalidLicense(text)) errorMessage = $"License number {completion.License} is invalid.";
+                    if (_errorHelper.LienseAlreadyOnRoster(text)) errorMessage = $"License number {completion.License} is already on the roster.";
+                    if (_errorHelper.HasAlreadyUsedCourse(text)) errorMessage = $"License number {completion.License} has already used course {completion.Course}.";
+
+                    Logger.LogException(ex, completion, errorMessage);
                 }
                 finally
                 {
                     //then go back to the previous page
-                    IWebElement goBack = wait.Until(d=> d.FindElement(By.Id("btnPrev")));
-                    goBack.Click();
+                    _wait.Until(d=> d.FindElement(By.Id("btnPrev"))).Click();
                 }
                 //loop again until the end
             }
@@ -145,15 +133,26 @@ namespace AutomateWashingtonUploads
             //driver.Close();
         }
 
-        private void LoginToWebsite()
+        public void LoginToWebsite()
         {
-            _driver.Url = _url;
+            _driver.Url = _loginInfo.LoginUrl;
             _driver.Manage().Window.Maximize();
 
-            IWebElement usernameInput = _driver.FindElement(By.Id("username"));
-            IWebElement passwordInput = _driver.FindElement(By.Id("password"));
-            usernameInput.SendKeys(_loginInfo.id);
-            passwordInput.SendKeys(_loginInfo.password);
+            _driver.FindElement(By.Id("username")).SendKeys(_loginInfo.Id);
+            _driver.FindElement(By.Id("password")).SendKeys(_loginInfo.Password);
+
+            try
+            {
+                _wait.Until(d => d.FindElement(By.XPath("//input[@value='SUBMIT']"))).Click();
+                _wait.Until(d => d.FindElement(By.XPath("//div[@class='table-row table-row-odd']//input[@value='ACCESS']"))).Click();
+            }
+            catch
+            {
+                _wait.Until(d => d.FindElement(By.XPath("//a[contains(text(),'Trades Education Roster Reporting System')]"))).Click();
+            }
+
+            IWebElement keepGoing = _wait.Until(d => d.FindElement(By.XPath("//input[@value='CONTINUE']")));
+            keepGoing.Click();
         }
     }
 }
