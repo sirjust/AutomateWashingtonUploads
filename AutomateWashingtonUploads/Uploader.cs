@@ -111,21 +111,36 @@ namespace AutomateWashingtonUploads
 
                     // next we have to submit the roster
                     _wait.Until(d=> d.FindElement(By.Id("btnTransferToRoster"))).Click();
+
+                    Logger.LogSuccess(completion);
                 }
                 catch(Exception ex)
                 {
-                    var text = _driver.FindElement(By.Id("lblError")).GetAttribute("innerText");
-                    if (_errorHelper.CourseOutOfDateRange(text)) errorMessage = "The Completion Date is out of the class range.";
-                    if (_errorHelper.HasInvalidLicense(text)) errorMessage = $"License number {completion.License} is invalid.";
-                    if (_errorHelper.LienseAlreadyOnRoster(text)) errorMessage = $"License number {completion.License} is already on the roster.";
-                    if (_errorHelper.HasAlreadyUsedCourse(text)) errorMessage = $"License number {completion.License} has already used course {completion.Course}.";
-
-                    Logger.LogException(ex, completion, errorMessage);
+                    try
+                    {
+                        var text = _driver.FindElement(By.Id("lblError")).GetAttribute("innerText");
+                        if (_errorHelper.CourseOutOfDateRange(text)) errorMessage = "The Completion Date is out of the class range.";
+                        if (_errorHelper.HasInvalidLicense(text)) errorMessage = $"License number {completion.License} is invalid.";
+                        if (_errorHelper.LienseAlreadyOnRoster(text)) errorMessage = $"License number {completion.License} is already on the roster.";
+                        if (_errorHelper.HasAlreadyUsedCourse(text)) errorMessage = $"License number {completion.License} has already used course {completion.Course}.";
+                    }
+                    finally
+                    {
+                        Logger.LogException(ex, completion, errorMessage);
+                    }
                 }
                 finally
                 {
+                    try
+                    {
+                        _wait.Until(d => d.FindElement(By.Id("btnPrev"))).Click();
+                    }
+                    catch(Exception ex)
+                    {
+                        Logger.LogException(ex, completion, errorMessage);
+                        Console.WriteLine("The program has stopped for an unknown reason. Please contact support.");
+                    }
                     //then go back to the previous page
-                    _wait.Until(d=> d.FindElement(By.Id("btnPrev"))).Click();
                 }
                 //loop again until the end
             }
