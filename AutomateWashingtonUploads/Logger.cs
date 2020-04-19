@@ -3,17 +3,17 @@ using System.IO;
 
 namespace AutomateWashingtonUploads
 {
-    public static class Logger
+    public class Logger : ILogger
     {
-        public static string StreamLocation { get; set; } = @"..\..\..\Logs\log_" + DateTime.Today.Month.ToString() + "-" + DateTime.Today.Day.ToString() + "-" + DateTime.Today.Year.ToString() + ".txt";
-        private static void WriteToLog(string logMessage, TextWriter sw)
+        public string StreamLocation { get; set; } = @"..\..\..\Logs\log_" + DateTime.Today.Month.ToString() + "-" + DateTime.Today.Day.ToString() + "-" + DateTime.Today.Year.ToString() + ".txt";
+        private void WriteToLog(string logMessage, TextWriter sw)
         {
             sw.Write("\r\nLog Entry : ");
             sw.WriteLine($"{DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}");
             sw.WriteLine($"{logMessage}");
         }
 
-        public static void LogException(Exception ex, Completion completion, string message = "")
+        public void LogException(Exception ex, Completion completion, string message = "")
         {
             string errorInfo = $"The following completion encountered a(n) {ex.GetType()} error:\r\n{completion.Course} | {completion.Date} | {completion.License} | {completion.Name}\r\nDetails: {ex.InnerException?.Message}\r\n{message}\r\n-------------------------------";
             var sw = GetWriter();
@@ -22,7 +22,7 @@ namespace AutomateWashingtonUploads
             sw.Close();
         }
 
-        public static void LogSuccess(Completion completion)
+        public void LogSuccess(Completion completion)
         {
             string successInfo = $"{completion.License} | {completion.Course} upload succeeded\r\n-------------------------------";
             var sw = GetWriter();
@@ -30,7 +30,7 @@ namespace AutomateWashingtonUploads
             Console.WriteLine($"\n{successInfo}");
             sw.Close();
         }
-        public static void LogLicenseChange(string oldLicense, string newLicense)
+        public void LogLicenseChange(string oldLicense, string newLicense)
         {
             string licenseChange = $"The program found license number {oldLicense} and changed it to {newLicense}\r\n------------------------";
             var sw = GetWriter();
@@ -39,12 +39,12 @@ namespace AutomateWashingtonUploads
             sw.Close();
         }
 
-        public static StreamWriter GetWriter()
+        public StreamWriter GetWriter()
         {
             return new StreamWriter(StreamLocation, true);
         }
 
-        public static StreamReader GetReader()
+        public StreamReader GetReader()
         {
             return new StreamReader(StreamLocation, true);
         }

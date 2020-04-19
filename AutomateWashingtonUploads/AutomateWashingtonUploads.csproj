@@ -87,8 +87,11 @@
     <Compile Include="Helpers\DataHelper.cs" />
     <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="Helpers\ErrorHelper.cs" />
+    <Compile Include="Helpers\IEmailHelper.cs" />
     <Compile Include="Helpers\IErrorHelper.cs" />
+    <Compile Include="Helpers\IValidationHelper.cs" />
     <Compile Include="Helpers\ValidationHelper.cs" />
+    <Compile Include="ILogger.cs" />
     <Compile Include="IUploader.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="StaticData\ILoginInfo.cs" />

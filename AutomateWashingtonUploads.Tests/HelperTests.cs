@@ -1,11 +1,21 @@
 ﻿using AutomateWashingtonUploads.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 namespace AutomateWashingtonUploads.Tests
 {
     [TestClass]
     public class HelperTests
     {
+        IValidationHelper _helper;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            var logger = new Mock<ILogger>().Object;
+            _helper = new ValidationHelper(logger);
+        }
+
         [TestMethod]
         public void ChangeSecondToLastCharacter_ShouldChangeCharacterToO()
         {
@@ -13,10 +23,36 @@ namespace AutomateWashingtonUploads.Tests
             var expected = "ABCD*EF864O5";
 
             // act
-            var result = ValidationHelper.ChangeSecondToLastCharacter("ABCD*EF86405");
+            var result = _helper.ChangeSecondToLastCharacter("ABCD*EF86405");
 
             // assert
             Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        public void CheckForZero_ShouldReturnSameLicense_WhenLicenseCorrect()
+        {
+            // arrange
+            var original = "ABCDEFGHIOOO";
+
+            // act
+            var actual = _helper.CheckForZero(original);
+
+            // assert
+            Assert.AreEqual(original, actual);
+        }
+
+        [TestMethod]
+        public void CheckForZero_ReturnsOriginal_WhenLicenseIncorrectLength()
+        {
+            // arrange
+            var original = "ABCDEF";
+
+            // act
+            var actual = _helper.CheckForZero(original);
+
+            // assert
+            Assert.AreEqual(original, actual);
         }
 
         [TestMethod]

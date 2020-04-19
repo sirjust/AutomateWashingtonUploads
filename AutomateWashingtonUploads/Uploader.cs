@@ -14,13 +14,17 @@ namespace AutomateWashingtonUploads
         ILoginInfo _loginInfo;
         WebDriverWait _wait;
         IErrorHelper _errorHelper;
+        ILogger _logger;
+        IValidationHelper _validationHelper;
 
-        public Uploader(IWebDriver driver, ILoginInfo loginInfo, IErrorHelper errorHelper)
+        public Uploader(IWebDriver driver, ILoginInfo loginInfo, IErrorHelper errorHelper, IValidationHelper validationHelper, ILogger logger)
         {
             _driver = driver;
             _loginInfo = loginInfo;
             _wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(10));
             _errorHelper = errorHelper;
+            _validationHelper = validationHelper;
+            _logger = logger;
         }
 
         public void InputCompletions(List<Completion> completions)
@@ -45,15 +49,12 @@ namespace AutomateWashingtonUploads
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogException(ex, completion);
+                    _logger.LogException(ex, completion);
                     // we are on the correct page so we can simply continue
                     continue;
                 }
                 // check if the user has put in a false value for the second to last character
-                if (license[10] == '0')
-                {
-                    license = ValidationHelper.ChangeSecondToLastCharacter(license);
-                }
+                license = _validationHelper.CheckForZero(license);
 
                 if (PlumbingCourses.Old_New_Courses.ContainsKey(courseNumber))
                 {
@@ -84,7 +85,7 @@ namespace AutomateWashingtonUploads
                     {
                         errorMessage = $"The following course was not found: {completion.Course}";
                     }
-                    Logger.LogException(ex, completion, errorMessage);
+                    _logger.LogException(ex, completion, errorMessage);
                     _driver.Navigate().GoToUrl(_driver.Url);
                     continue;
                 }
@@ -96,7 +97,7 @@ namespace AutomateWashingtonUploads
                 }
                 catch(Exception ex)
                 {
-                    Logger.LogException(ex, completion, errorMessage);
+                    _logger.LogException(ex, completion, errorMessage);
                     //then go back to the previous page
                     _driver.FindElement(By.Id("btnPrev")).Click();
                     continue;
@@ -112,7 +113,7 @@ namespace AutomateWashingtonUploads
                     // next we have to submit the roster
                     _wait.Until(d=> d.FindElement(By.Id("btnTransferToRoster"))).Click();
 
-                    Logger.LogSuccess(completion);
+                    _logger.LogSuccess(completion);
                 }
                 catch(Exception ex)
                 {
@@ -126,7 +127,7 @@ namespace AutomateWashingtonUploads
                     }
                     finally
                     {
-                        Logger.LogException(ex, completion, errorMessage);
+                        _logger.LogException(ex, completion, errorMessage);
                     }
                 }
                 finally
@@ -137,7 +138,7 @@ namespace AutomateWashingtonUploads
                     }
                     catch(Exception ex)
                     {
-                        Logger.LogException(ex, completion, errorMessage);
+                        _logger.LogException(ex, completion, errorMessage);
                         Console.WriteLine("The program has stopped for an unknown reason. Please contact support.");
                     }
                     //then go back to the previous page

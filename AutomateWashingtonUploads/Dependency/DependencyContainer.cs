@@ -14,6 +14,9 @@ namespace AutomateWashingtonUploads.Dependency
             Bind<IWebDriver>().To<FirefoxDriver>();
             Bind<IUploader>().To<Uploader>();
             Bind<IErrorHelper>().To<ErrorHelper>();
+            Bind<ILogger>().To<Logger>();
+            Bind<IEmailHelper>().To<EmailHelper>();
+            Bind<IValidationHelper>().To<ValidationHelper>();
         }
     }
 }
