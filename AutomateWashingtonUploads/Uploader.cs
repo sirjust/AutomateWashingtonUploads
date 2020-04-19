@@ -36,13 +36,12 @@ namespace AutomateWashingtonUploads
             {
                 // from here we loop through each completion
                 string courseNumber = completion.Course;
-                string license = completion.License;
                 DateTime.TryParse(completion.Date, out DateTime completionDate);
 
                 // check length of license
                 try
                 {
-                    if (!ValidationHelper.IsLicenseTwelveCharacters(license))
+                    if (!ValidationHelper.IsLicenseTwelveCharacters(completion.License))
                     {
                         throw new Exception("", new Exception("The license is an incorrect length."));
                     }
@@ -54,7 +53,7 @@ namespace AutomateWashingtonUploads
                     continue;
                 }
                 // check if the user has put in a false value for the second to last character
-                license = _validationHelper.CheckForZero(license);
+                completion.License = _validationHelper.CheckForZero(completion.License);
 
                 if (PlumbingCourses.Old_New_Courses.ContainsKey(courseNumber))
                 {
@@ -107,7 +106,7 @@ namespace AutomateWashingtonUploads
                 {
                     // here we create a roster and find the license
                     _wait.Until(d => d.FindElement(By.Id("btnGetRoster"))).Click();
-                    _wait.Until(d=> d.FindElement(By.Id("txtLicense"))).SendKeys(license);
+                    _wait.Until(d=> d.FindElement(By.Id("txtLicense"))).SendKeys(completion.License);
                     _wait.Until(d=> d.FindElement(By.Id("btnPeople"))).Click();
 
                     // next we have to submit the roster
