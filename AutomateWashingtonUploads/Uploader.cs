@@ -112,7 +112,7 @@ namespace AutomateWashingtonUploads
                     // next we have to submit the roster
                     _wait.Until(d=> d.FindElement(By.Id("btnTransferToRoster"))).Click();
 
-                    _logger.LogSuccess(completion);
+                    // _logger.LogSuccess(completion);
                 }
                 catch(Exception ex)
                 {
