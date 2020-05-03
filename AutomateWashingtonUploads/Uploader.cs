@@ -30,6 +30,7 @@ namespace AutomateWashingtonUploads
         public void InputCompletions(List<Completion> completions)
         {
             string errorMessage = "";
+            _logger.WriteToLog("Commencing uploads.\n", _logger.GetWriter());
             LoginToWebsite();
 
             foreach(Completion completion in completions)

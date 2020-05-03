@@ -1,6 +1,5 @@
 using AutomateWashingtonUploads.Dependency;
 using AutomateWashingtonUploads.Helpers;
-using AutomateWashingtonUploads.StaticData;
 using Ninject;
 using System;
 using System.Collections.Generic;
