@@ -22,7 +22,10 @@ namespace AutomateWashingtonUploads.Helpers
                 MailMessage mail = new MailMessage();
                 SmtpClient SmtpClient = new SmtpClient("smtp.gmail.com");
                 mail.From = new MailAddress(_info.MailerAddress);
-                mail.To.Add(_info.EmailRecipient);
+                foreach(var recipient in _info.EmailRecipients)
+                {
+                    mail.To.Add(recipient);
+                }
                 mail.Subject = $"Washington Uploads: {DateTime.Now}";
                 mail.Body = "mail with attachment";
 

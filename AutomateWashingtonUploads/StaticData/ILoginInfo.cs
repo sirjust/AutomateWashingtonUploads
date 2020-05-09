@@ -1,4 +1,6 @@
-﻿namespace AutomateWashingtonUploads.StaticData
+﻿using System.Collections.Generic;
+
+namespace AutomateWashingtonUploads.StaticData
 {
     public interface ILoginInfo
     {
@@ -8,6 +10,6 @@
 
         string MailerAddress { get; set; }
         string MailerPassword { get; set; }
-        string EmailRecipient { get; set; }
+        List<string> EmailRecipients { get; set; }
     }
 }
