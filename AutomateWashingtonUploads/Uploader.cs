@@ -160,16 +160,14 @@ namespace AutomateWashingtonUploads
             try
             {
                 _wait.Until(d => d.FindElement(By.XPath("//input[@value='SUBMIT']"))).Click();
-                _wait.Until(d => d.FindElement(By.XPath("//div[@class='table-row table-row-odd']//input[@value='ACCESS']"))).Click();
+                _driver.Url = @"https://secureaccess.wa.gov/myAccess/saw/leaving/display.do?agency=LNI&service=terrs";
+                _wait.Until(d => d.FindElement(By.XPath("//input[@value='CONTINUE']"))).Click();
             }
-            catch
+            catch(Exception ex)
             {
-                _wait.Until(d => d.FindElement(By.XPath("//a[contains(text(),'Trades Education Roster Reporting System')]"))).Click();
+                _logger.LogException(ex, new Completion(), "There was an error logging in");
+                throw;
             }
-
-            IWebElement keepGoing = _wait.Until(d => d.FindElement(By.XPath("//input[@value='CONTINUE']")));
-            keepGoing.Click();
         }
     }
 }
-
