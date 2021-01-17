@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "cqsZQIph9qVQOGsNqfk5j5pyVArBDyzD2SB7KC1C9FucQNBsV9DMgYkNu15J5x5b8ISwOi+Q5C96tO+WXYEUbw==",
+  "dgSpecHash": "eLE04yXsf4c2S53MClIB9bWW0CY5CA62tEyIUJM//KuynVaBvdhZPhSp/I/prILsswUpSVP7Ou3uU125t0wclw==",
   "success": true,
   "projectFilePath": "C:\\Users\\SirJUST\\source\\repos\\AutomateWashingtonUploads\\AutomateWashingtonUploads\\AutomateWashingtonUploads.csproj",
   "expectedPackageFiles": [
@@ -27,6 +27,7 @@
     "C:\\Users\\SirJUST\\.nuget\\packages\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.14.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\SirJUST\\.nuget\\packages\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.04-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\SirJUST\\.nuget\\packages\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
+    "C:\\Users\\SirJUST\\.nuget\\packages\\selenium.firefox.webdriver\\0.27.0\\selenium.firefox.webdriver.0.27.0.nupkg.sha512",
     "C:\\Users\\SirJUST\\.nuget\\packages\\selenium.webdriver\\3.141.0\\selenium.webdriver.3.141.0.nupkg.sha512",
     "C:\\Users\\SirJUST\\.nuget\\packages\\system.appcontext\\4.3.0\\system.appcontext.4.3.0.nupkg.sha512",
     "C:\\Users\\SirJUST\\.nuget\\packages\\system.buffers\\4.3.0\\system.buffers.4.3.0.nupkg.sha512",
