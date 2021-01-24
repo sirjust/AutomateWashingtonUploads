@@ -308,12 +308,6 @@
           }
         }
       },
-      "Selenium.Firefox.WebDriver/0.27.0": {
-        "type": "package",
-        "build": {
-          "build/Selenium.Firefox.WebDriver.targets": {}
-        }
-      },
       "Selenium.WebDriver/3.141.0": {
         "type": "package",
         "dependencies": {
@@ -324,6 +318,12 @@
         },
         "runtime": {
           "lib/netstandard2.0/WebDriver.dll": {}
+        }
+      },
+      "Selenium.WebDriver.ChromeDriver/88.0.4324.9600": {
+        "type": "package",
+        "build": {
+          "build/Selenium.WebDriver.ChromeDriver.targets": {}
         }
       },
       "System.AppContext/4.3.0": {
@@ -1839,19 +1839,6 @@
         "runtimes/ubuntu.16.10-x64/native/System.Security.Cryptography.Native.OpenSsl.so"
       ]
     },
-    "Selenium.Firefox.WebDriver/0.27.0": {
-      "sha512": "HwCaTaa+snzkLF7ZVaxKSmdttKm+KXT7HOY8c1q8p9E7x05+WHqw5XaZjUGFytVT1+0FkgUoH/u/I+csPLeJAg==",
-      "type": "package",
-      "path": "selenium.firefox.webdriver/0.27.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "build/Selenium.Firefox.WebDriver.targets",
-        "driver/geckodriver.exe",
-        "selenium.firefox.webdriver.0.27.0.nupkg.sha512",
-        "selenium.firefox.webdriver.nuspec"
-      ]
-    },
     "Selenium.WebDriver/3.141.0": {
       "sha512": "wPqzXO3f79DzqauTZSzLMKiaBCN0Z2Mv7KvWP+hnV6EL88zh/pJJnFtdIR1X5wa3hsTOpF/bBJs45rz7kArsiA==",
       "type": "package",
@@ -1869,6 +1856,23 @@
         "lib/netstandard2.0/WebDriver.xml",
         "selenium.webdriver.3.141.0.nupkg.sha512",
         "selenium.webdriver.nuspec"
+      ]
+    },
+    "Selenium.WebDriver.ChromeDriver/88.0.4324.9600": {
+      "sha512": "tFYi/cACBE+lq+aQMMCFDCZChkq7jQHm3yNh040r2WeuI+WBg3MDna9o+8x6d+inxdbCXDABnifqKb4CynRQLQ==",
+      "type": "package",
+      "path": "selenium.webdriver.chromedriver/88.0.4324.9600",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "build/DefinePropertiesChromeDriver.targets",
+        "build/Selenium.WebDriver.ChromeDriver.targets",
+        "driver/linux64/chromedriver",
+        "driver/mac64/chromedriver",
+        "driver/win32/chromedriver.exe",
+        "nupkg-icon.png",
+        "selenium.webdriver.chromedriver.88.0.4324.9600.nupkg.sha512",
+        "selenium.webdriver.chromedriver.nuspec"
       ]
     },
     "System.AppContext/4.3.0": {
@@ -5280,8 +5284,8 @@
   "projectFileDependencyGroups": {
     "net5.0": [
       "Ninject >= 3.3.4",
-      "Selenium.Firefox.WebDriver >= 0.27.0",
-      "Selenium.WebDriver >= 3.141.0"
+      "Selenium.WebDriver >= 3.141.0",
+      "Selenium.WebDriver.ChromeDriver >= 88.0.4324.9600"
     ]
   },
   "packageFolders": {
@@ -5327,13 +5331,13 @@
             "target": "Package",
             "version": "[3.3.4, )"
           },
-          "Selenium.Firefox.WebDriver": {
-            "target": "Package",
-            "version": "[0.27.0, )"
-          },
           "Selenium.WebDriver": {
             "target": "Package",
             "version": "[3.141.0, )"
+          },
+          "Selenium.WebDriver.ChromeDriver": {
+            "target": "Package",
+            "version": "[88.0.4324.9600, )"
           }
         },
         "imports": [
