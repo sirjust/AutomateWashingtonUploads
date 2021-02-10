@@ -29,21 +29,22 @@ namespace AutomateWashingtonUploads.Helpers
                 mail.Subject = $"Washington Uploads: {DateTime.Now}";
                 mail.Body = "mail with attachment";
 
-                Attachment attachment;
-                attachment = new Attachment(_logger.StreamLocation);
-                mail.Attachments.Add(attachment);
+                using (Attachment attachment = new Attachment(_logger.StreamLocation))
+                {
+                    mail.Attachments.Add(attachment);
 
-                SmtpClient.Port = 587;
-                SmtpClient.Credentials = new System.Net.NetworkCredential(_info.MailerAddress, _info.MailerPassword);
-                SmtpClient.EnableSsl = true;
+                    SmtpClient.Port = 587;
+                    SmtpClient.Credentials = new System.Net.NetworkCredential(_info.MailerAddress, _info.MailerPassword);
+                    SmtpClient.EnableSsl = true;
 
-                SmtpClient.Send(mail);
-                Console.WriteLine("Email sent");
-                SmtpClient.Dispose();
+                    SmtpClient.Send(mail);
+                    Console.WriteLine("Email sent");
+                    SmtpClient.Dispose();
+                }
             }
             catch (Exception ex)
             {
-                _logger.LogException(ex, new Completion());
+                _logger.LogException(ex.Message);
                 Console.WriteLine("Could not send email");
             }
         }

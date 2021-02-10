@@ -1,4 +1,5 @@
-﻿using AutomateWashingtonUploads.Helpers;
+﻿using AutomateWashingtonUploads.Data;
+using AutomateWashingtonUploads.Helpers;
 using AutomateWashingtonUploads.StaticData;
 using Ninject.Modules;
 using OpenQA.Selenium;
@@ -17,6 +18,7 @@ namespace AutomateWashingtonUploads.Dependency
             Bind<ILogger>().To<Logger>();
             Bind<IEmailHelper>().To<EmailHelper>();
             Bind<IValidationHelper>().To<ValidationHelper>();
+            Bind<ICompletionRepository>().To<CompletionRepository>();
         }
     }
 }

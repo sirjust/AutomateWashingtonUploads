@@ -23,6 +23,15 @@ namespace AutomateWashingtonUploads
             sw.Close();
         }
 
+        public void LogException(string message)
+        {
+            string errorInfo = $"{message}\n-------------------------------";
+            var sw = GetWriter();
+            WriteToLog(errorInfo, sw);
+            Console.WriteLine($"\n{errorInfo}");
+            sw.Close();
+        }
+
         public void LogSuccess(Completion completion)
         {
             string successInfo = $"{completion.License} | {completion.Course} upload succeeded\r\n-------------------------------";

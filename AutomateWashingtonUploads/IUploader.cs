@@ -4,7 +4,7 @@ namespace AutomateWashingtonUploads
 {
     public interface IUploader
     {
-        void InputCompletions(List<Completion> completions);
+        void InputCompletions(IEnumerable<Completion> completions);
 
         void LoginToWebsite();
     }
