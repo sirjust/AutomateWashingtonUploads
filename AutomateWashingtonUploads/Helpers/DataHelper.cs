@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutomateWashingtonUploads.Helpers
 {
     public static class DataHelper
     {
-        public static List<Completion> ListToCompletionList(List<string> stringList)
+        public static IEnumerable<Completion> ListToCompletionList(IEnumerable<string> stringList)
         {
             List<string[]> dividedStrings = new List<string[]>();
             List<Completion> myCompletionList = new List<Completion>();
@@ -24,17 +21,19 @@ namespace AutomateWashingtonUploads.Helpers
 
             for (int i = 0; i < dividedStrings.Count - 1; i++)
             {
-                Completion completion = new Completion();
-                completion.Course = dividedStrings[i][0];
-                completion.Date = dividedStrings[i][1];
-                completion.License = dividedStrings[i][2];
-                completion.Name = dividedStrings[i][3];
+                Completion completion = new Completion
+                {
+                    Course = dividedStrings[i][0],
+                    Date = dividedStrings[i][1],
+                    License = dividedStrings[i][2],
+                    Name = dividedStrings[i][3]
+                };
                 myCompletionList.Add(completion);
             }
             return myCompletionList;
         }
 
-        public static List<string> ConvertDataToStringList()
+        public static IEnumerable<string> ConvertDataToStringList()
         {
             string s = "1";
             List<string> result = new List<string> { };

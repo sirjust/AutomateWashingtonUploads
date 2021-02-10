@@ -1,6 +1,7 @@
 ﻿using AutomateWashingtonUploads.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System.Linq;
 
 namespace AutomateWashingtonUploads.Tests
 {
@@ -97,7 +98,7 @@ namespace AutomateWashingtonUploads.Tests
 
             // act
             var rawCompletions = TestData.GetMockCompletions();
-            var actual = DataHelper.ListToCompletionList(rawCompletions)[0];
+            var actual = DataHelper.ListToCompletionList(rawCompletions).FirstOrDefault();
             // assert
             Assert.AreEqual(expected.Course, actual.Course);
             Assert.AreEqual(expected.Name, actual.Name);

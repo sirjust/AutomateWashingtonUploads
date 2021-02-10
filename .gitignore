@@ -1,7 +1,6 @@
 /packages
 Debug/
 Release/
-Logs/
 .vs/
 
 LoginInfo.cs

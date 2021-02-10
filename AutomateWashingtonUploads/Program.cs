@@ -1,8 +1,8 @@
+using AutomateWashingtonUploads.Data;
 using AutomateWashingtonUploads.Dependency;
 using AutomateWashingtonUploads.Helpers;
 using Ninject;
 using System;
-using System.Collections.Generic;
 
 namespace AutomateWashingtonUploads
 {
@@ -11,16 +11,17 @@ namespace AutomateWashingtonUploads
         static void Main()
         {
             var kernel = new StandardKernel(new DependencyContainer());
+            var completionRepository = kernel.Get<ICompletionRepository>();
 
             // take user input and convert to a string list
             Console.WriteLine("Please input completion data, then press Enter twice: ");
-            List<string> convertedList = DataHelper.ConvertDataToStringList();
+            var convertedList = DataHelper.ConvertDataToStringList();
 
             // convert string list to completion list which can be used by the upload task
-            var finishedList = DataHelper.ListToCompletionList(convertedList);
+            completionRepository.Completions = DataHelper.ListToCompletionList(convertedList);
 
             // send sanitized data to uploader, iterate and upload each entry
-            kernel.Get<IUploader>().InputCompletions(finishedList);
+            kernel.Get<IUploader>().InputCompletions(completionRepository.Completions);
 
             // now we will send an email with the log file
             kernel.Get<IEmailHelper>().SendEmail();

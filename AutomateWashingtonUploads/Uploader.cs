@@ -27,7 +27,7 @@ namespace AutomateWashingtonUploads
             _logger = logger;
         }
 
-        public void InputCompletions(List<Completion> completions)
+        public void InputCompletions(IEnumerable<Completion> completions)
         {
             string errorMessage = "";
             _logger.WriteToLog("Commencing uploads.\n", _logger.GetWriter());
@@ -152,14 +152,14 @@ namespace AutomateWashingtonUploads
         public void LoginToWebsite()
         {
             _driver.Url = _loginInfo.LoginUrl;
-            _driver.Manage().Window.Maximize();
+            // _driver.Manage().Window.Maximize();
 
-            _driver.FindElement(By.Id("username")).SendKeys(_loginInfo.Id);
-            _driver.FindElement(By.Id("password")).SendKeys(_loginInfo.Password);
+            //_driver.FindElement(By.Id("username")).SendKeys(_loginInfo.Id);
+            //_driver.FindElement(By.Id("password")).SendKeys(_loginInfo.Password);
 
             try
             {
-                _wait.Until(d => d.FindElement(By.XPath("//input[@value='SUBMIT']"))).Click();
+                //_wait.Until(d => d.FindElement(By.XPath("//input[@value='SUBMIT']"))).Click();
                 _driver.Url = @"https://secureaccess.wa.gov/myAccess/saw/leaving/display.do?agency=LNI&service=terrs";
                 _wait.Until(d => d.FindElement(By.XPath("//input[@value='CONTINUE']"))).Click();
             }
