@@ -1,6 +1,7 @@
 using AutomateWashingtonUploads.Data;
 using AutomateWashingtonUploads.Dependency;
 using AutomateWashingtonUploads.Helpers;
+using Microsoft.Extensions.Configuration;
 using Ninject;
 using System;
 using System.Threading.Tasks;
@@ -11,6 +12,11 @@ namespace AutomateWashingtonUploads
     {
         static async Task Main()
         {
+            var config = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddUserSecrets<Program>()
+                .Build();
+
             var kernel = new StandardKernel(new DependencyContainer());
             var completionRepository = kernel.Get<ICompletionRepository>();
 
@@ -25,7 +31,7 @@ namespace AutomateWashingtonUploads
             kernel.Get<IUploader>().InputCompletions(completionRepository.Completions);
 
             // now we will send an email with the log file
-            await kernel.Get<IEmailHelper>().SendEmail();
+            await kernel.Get<IEmailHelper>().SendEmail(config);
 
             // the log file is located in the bin/debug folder, it is called log.txt
             Console.WriteLine("\nYour uploads are complete. Please check the log file for any errors.");
