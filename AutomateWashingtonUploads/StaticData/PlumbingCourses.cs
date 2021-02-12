@@ -75,7 +75,8 @@ namespace AutomateWashingtonUploads.StaticData
             "WA2020-632",
             "WA2020-824",
             "WA2020-825",
-            "WA2021-027"
+            "WA2021-027",
+            "WA2021-061"
         };
 
         public static Dictionary<string, string> Old_New_Courses = new Dictionary<string, string>{
@@ -114,6 +115,8 @@ namespace AutomateWashingtonUploads.StaticData
             { "WA2019-041", "WA2020-469" }, // 2015 UPC Chp 16 Nonpotable Rainwater
             { "WA2020-055", "WA2020-632" }, // 2015 UPC Update
             { "WA2017-652", "WA2020-825" }, // Excavation
+            { "WA2018-184", "WA2021-027" }, // Wells Part 1
+            { "WA2018-185", "WA2021-061" }  // Wells Part 2
         };
     }
 }
