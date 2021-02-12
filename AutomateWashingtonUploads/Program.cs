@@ -3,12 +3,13 @@ using AutomateWashingtonUploads.Dependency;
 using AutomateWashingtonUploads.Helpers;
 using Ninject;
 using System;
+using System.Threading.Tasks;
 
 namespace AutomateWashingtonUploads
 {
     class Program
     {
-        static void Main()
+        static async Task Main()
         {
             var kernel = new StandardKernel(new DependencyContainer());
             var completionRepository = kernel.Get<ICompletionRepository>();
@@ -24,7 +25,7 @@ namespace AutomateWashingtonUploads
             kernel.Get<IUploader>().InputCompletions(completionRepository.Completions);
 
             // now we will send an email with the log file
-            kernel.Get<IEmailHelper>().SendEmail();
+            await kernel.Get<IEmailHelper>().SendEmail();
 
             // the log file is located in the bin/debug folder, it is called log.txt
             Console.WriteLine("\nYour uploads are complete. Please check the log file for any errors.");

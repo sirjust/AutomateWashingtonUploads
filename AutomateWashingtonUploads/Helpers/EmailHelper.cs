@@ -1,6 +1,11 @@
 ﻿using AutomateWashingtonUploads.StaticData;
+using FluentEmail.Core;
+using FluentEmail.Core.Models;
+using FluentEmail.Smtp;
 using System;
+using System.Collections.Generic;
 using System.Net.Mail;
+using System.Threading.Tasks;
 
 namespace AutomateWashingtonUploads.Helpers
 {
@@ -15,38 +20,35 @@ namespace AutomateWashingtonUploads.Helpers
             _logger = logger;
         }
 
-        public void SendEmail()
+        public async Task SendEmail()
         {
-            try
+            var recipients = new List<Address>();
+
+            foreach(var emailAdress in _info.EmailRecipients)
             {
-                MailMessage mail = new MailMessage();
-                SmtpClient SmtpClient = new SmtpClient("smtp.gmail.com");
-                mail.From = new MailAddress(_info.MailerAddress);
-                foreach(var recipient in _info.EmailRecipients)
-                {
-                    mail.To.Add(recipient);
-                }
-                mail.Subject = $"Washington Uploads: {DateTime.Now}";
-                mail.Body = "mail with attachment";
-
-                using (Attachment attachment = new Attachment(_logger.StreamLocation))
-                {
-                    mail.Attachments.Add(attachment);
-
-                    SmtpClient.Port = 587;
-                    SmtpClient.Credentials = new System.Net.NetworkCredential(_info.MailerAddress, _info.MailerPassword);
-                    SmtpClient.EnableSsl = true;
-
-                    SmtpClient.Send(mail);
-                    Console.WriteLine("Email sent");
-                    SmtpClient.Dispose();
-                }
+                recipients.Add(new Address(emailAdress));
             }
-            catch (Exception ex)
+
+            var sender = new SmtpSender(() => new SmtpClient("smtp.gmail.com")
             {
-                _logger.LogException(ex.Message);
-                Console.WriteLine("Could not send email");
-            }
+                EnableSsl = true,
+                Port = 587,
+                Credentials = new System.Net.NetworkCredential(_info.MailerAddress, _info.MailerPassword)
+            });
+
+            Email.DefaultSender = sender;
+
+            var email = await Email
+                .From(_info.MailerAddress)
+                .To(recipients)
+                .Subject($"Washington Uploads: {DateTime.Now}")
+                .Body("See attachment below for logs")
+                .AttachFromFilename(_logger.StreamLocation)
+                .SendAsync();
+
+            if (email.Successful)
+                Console.WriteLine("Email sent successfully");
+            else Console.WriteLine("Could not send email");
         }
     }
 }
