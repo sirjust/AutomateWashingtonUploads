@@ -29,12 +29,12 @@ namespace AutomateWashingtonUploads
 
         public void InputCompletions(IEnumerable<Completion> completions)
         {
-            string errorMessage = "";
             _logger.WriteToLog("Commencing uploads.\n", _logger.GetWriter());
             LoginToWebsite();
 
             foreach(Completion completion in completions)
             {
+                string errorMessage = "";
                 // from here we loop through each completion
                 string courseNumber = completion.Course;
                 DateTime.TryParse(completion.Date, out DateTime completionDate);
@@ -121,9 +121,10 @@ namespace AutomateWashingtonUploads
                     {
                         var text = _driver.FindElement(By.Id("lblError")).GetAttribute("innerText");
                         if (_errorHelper.CourseOutOfDateRange(text)) errorMessage = "The Completion Date is out of the class range.";
-                        if (_errorHelper.HasInvalidLicense(text)) errorMessage = $"License number {completion.License} is invalid.";
-                        if (_errorHelper.LienseAlreadyOnRoster(text)) errorMessage = $"License number {completion.License} is already on the roster.";
-                        if (_errorHelper.HasAlreadyUsedCourse(text)) errorMessage = $"License number {completion.License} has already used course {completion.Course}.";
+                        else if (_errorHelper.HasInvalidLicense(text)) errorMessage = $"License number {completion.License} is invalid.";
+                        else if (_errorHelper.LienseAlreadyOnRoster(text)) errorMessage = $"License number {completion.License} is already on the roster.";
+                        else if (_errorHelper.HasAlreadyUsedCourse(text)) errorMessage = $"License number {completion.License} has already used course {completion.Course}.";
+                        else errorMessage = "An unknown error occurred";
                     }
                     finally
                     {
