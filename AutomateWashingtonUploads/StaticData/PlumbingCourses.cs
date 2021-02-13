@@ -73,6 +73,8 @@ namespace AutomateWashingtonUploads.StaticData
             "WA2020-469",
             "WA2020-472",
             "WA2020-632",
+            "WA2020-633",
+            "WA2020-634",
             "WA2020-824",
             "WA2020-825",
             "WA2021-027",
