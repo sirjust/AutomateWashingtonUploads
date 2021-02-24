@@ -5,6 +5,7 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AutomateWashingtonUploads
 {
@@ -110,10 +111,15 @@ namespace AutomateWashingtonUploads
                     _wait.Until(d=> d.FindElement(By.Id("txtLicense"))).SendKeys(completion.License);
                     _wait.Until(d=> d.FindElement(By.Id("btnPeople"))).Click();
 
-                    // next we have to submit the roster
-                    _wait.Until(d=> d.FindElement(By.Id("btnTransferToRoster"))).Click();
+                    bool submitted = RosterSubmitted();
 
-                    // _logger.LogSuccess(completion);
+                    if (submitted == false)
+                    {
+                        Task.Delay(3000).Wait();
+                        // retry the submission button if the server doesn't respond immediately
+                        submitted = RosterSubmitted();
+                    }
+                    if (submitted == false) throw new Exception("Roster submission button is unresponsive");
                 }
                 catch(Exception ex)
                 {
@@ -169,6 +175,33 @@ namespace AutomateWashingtonUploads
                 _logger.LogException(ex, new Completion(), "There was an error logging in");
                 throw;
             }
+        }
+
+        public bool RosterSubmitted()
+        {
+            try
+            {
+                _wait.Until(d => d.FindElement(By.Id("btnTransferToRoster"))).Click();
+
+                try
+                {
+                    // This message will appear if clicking the transfer button failed to get a response
+                    var pendingMessage = _wait.Until(d => d.FindElement(By.Id("MessageLabel")));
+                    if (pendingMessage.Text.Contains("Pending Roster has not been submitted"))
+                    {
+                        return false;
+                    }
+                }
+                catch
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
