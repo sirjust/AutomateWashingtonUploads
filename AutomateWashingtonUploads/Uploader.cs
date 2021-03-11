@@ -181,7 +181,7 @@ namespace AutomateWashingtonUploads
         {
             try
             {
-                _wait.Until(d => d.FindElement(By.Id("btnTransferToRoster"))).Click();
+                _wait.Until(d => d.GetElementAndScrollTo(By.Id("btnTransferToRoster"))).Click();
 
                 try
                 {
