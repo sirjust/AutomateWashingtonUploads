@@ -159,7 +159,7 @@ namespace AutomateWashingtonUploads
         public void LoginToWebsite()
         {
             _driver.Url = _loginInfo.LoginUrl;
-            // _driver.Manage().Window.Maximize();
+            _driver.Manage().Window.Maximize();
 
             //_driver.FindElement(By.Id("username")).SendKeys(_loginInfo.Id);
             //_driver.FindElement(By.Id("password")).SendKeys(_loginInfo.Password);
