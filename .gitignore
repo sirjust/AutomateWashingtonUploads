@@ -2,6 +2,7 @@
 Debug/
 Release/
 .vs/
+obj/
 
 LoginInfo.cs
 
