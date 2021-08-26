@@ -25,7 +25,9 @@ This program allows a Plumbing and Electrical eLearning company to automatically
 [21372:21360:0124/150957.594:ERROR:device_event_log_impl.cc(211)] [15:09:57.595] USB: usb_device_handle_win.cc:1049 Failed to read descriptor from node connection: A device attached to the system is not functioning. (0x1F)
 ```
 
-This error should be ignored. The Chrome team is working to lower the log event level so this doesn't appear. It has no bearing on the way our ChromeDriver operates, and the errors won't appear in our logs or the email the program sends
+This error should be ignored. The Chrome team is working to lower the log event level so this doesn't appear. It has no bearing on the way our `ChromeDriver` operates, and the errors won't appear in our logs or the email the program sends
+
+As of August 2021 these errors should no longer be logging. We can configure the `ChromeDriver` to exclude logging (see `DependencyContainer.cs`)
 
 ## Troubleshooting
 
