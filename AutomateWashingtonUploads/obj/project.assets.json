@@ -353,7 +353,7 @@
           "lib/netstandard2.0/WebDriver.dll": {}
         }
       },
-      "Selenium.WebDriver.ChromeDriver/92.0.4515.10700": {
+      "Selenium.WebDriver.ChromeDriver/94.0.4606.6100": {
         "type": "package",
         "build": {
           "build/Selenium.WebDriver.ChromeDriver.targets": {}
@@ -1931,10 +1931,10 @@
         "selenium.webdriver.nuspec"
       ]
     },
-    "Selenium.WebDriver.ChromeDriver/92.0.4515.10700": {
-      "sha512": "1izYN4xibfIy9MgQvMpSzoNPU5TugR18aOcXptSVpVrbrgEl6pah3kgNm7WPwSknG0UX4E2u//oq0oEbqzsoqg==",
+    "Selenium.WebDriver.ChromeDriver/94.0.4606.6100": {
+      "sha512": "3mk0sCbTR0bCvis1VbIR6SF8PxRXQgwHjIg1bVve0DmQqC8muxoxIYdVrb3oL42cmGqVUoAxRFN/MWDHGKWYIw==",
       "type": "package",
-      "path": "selenium.webdriver.chromedriver/92.0.4515.10700",
+      "path": "selenium.webdriver.chromedriver/94.0.4606.6100",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1945,7 +1945,7 @@
         "driver/mac64/chromedriver",
         "driver/win32/chromedriver.exe",
         "nupkg-icon.png",
-        "selenium.webdriver.chromedriver.92.0.4515.10700.nupkg.sha512",
+        "selenium.webdriver.chromedriver.94.0.4606.6100.nupkg.sha512",
         "selenium.webdriver.chromedriver.nuspec"
       ]
     },
@@ -5360,7 +5360,7 @@
       "FluentEmail.Smtp >= 3.0.0",
       "Ninject >= 3.3.4",
       "Selenium.WebDriver >= 3.141.0",
-      "Selenium.WebDriver.ChromeDriver >= 92.0.4515.10700"
+      "Selenium.WebDriver.ChromeDriver >= 94.0.4606.6100"
     ]
   },
   "packageFolders": {
@@ -5416,7 +5416,7 @@
           },
           "Selenium.WebDriver.ChromeDriver": {
             "target": "Package",
-            "version": "[92.0.4515.10700, )"
+            "version": "[94.0.4606.6100, )"
           }
         },
         "imports": [
