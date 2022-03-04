@@ -54,6 +54,7 @@ namespace AutomateWashingtonUploads.StaticData
 
             "WA2020-054",
             "WA2020-055",
+            "WA2020-120",
             "WA2020-455",
             "WA2020-456",
             "WA2020-457",
@@ -82,7 +83,7 @@ namespace AutomateWashingtonUploads.StaticData
         };
 
         public static Dictionary<string, string> Old_New_Courses = new Dictionary<string, string>{
-            { "WA2016-323", "WA2019-159" }, // electrical safety
+            { "WA2016-323", "WA2020-120" }, // electrical safety
             { "WA2016-346", "WA2019-158" }, // electrical review
             { "WA2016-355", "WA2019-156" }, // 2015 UPC Chapters 2 - 6 Questions
             { "WA2016-356", "WA2019-157" }, // 2015 UPC Chapters 7, 8, 9 Questions
@@ -118,7 +119,9 @@ namespace AutomateWashingtonUploads.StaticData
             { "WA2020-055", "WA2020-632" }, // 2015 UPC Update
             { "WA2017-652", "WA2020-825" }, // Excavation
             { "WA2018-184", "WA2021-027" }, // Wells Part 1
-            { "WA2018-185", "WA2021-061" }  // Wells Part 2
+            { "WA2018-185", "WA2021-061" },  // Wells Part 2
+            { "WA2019-159", "WA2020-120" }, // electrical safety
+            { "WA2019-134", "WA2022-112" }
         };
     }
 }
