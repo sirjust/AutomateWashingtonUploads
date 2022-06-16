@@ -81,14 +81,25 @@ namespace AutomateWashingtonUploads
                 }
                 catch(Exception ex)
                 {
-                    var text = _driver.FindElement(By.Id("lblError")).GetAttribute("innerText");
-                    if (_errorHelper.CourseNumberNotFound(text))
+                    try
                     {
-                        errorMessage = $"The following course was not found: {completion.Course}";
+                        var text = _driver.FindElement(By.Id("lblError")).GetAttribute("innerText");
+                        if (_errorHelper.CourseNumberNotFound(text))
+                        {
+                            errorMessage = $"The following course was not found: {completion.Course}";
+                        }
+                        _logger.LogException(ex, completion, errorMessage);
+                        _driver.Navigate().GoToUrl(_driver.Url);
+                        continue;
                     }
-                    _logger.LogException(ex, completion, errorMessage);
-                    _driver.Navigate().GoToUrl(_driver.Url);
-                    continue;
+                    catch
+                    {
+                        _logger.LogException($"There was an unrecoverable error on completion {completion.Course}, {completion.Name}.\n " +
+                            $"The connection may be at fault. Try again when there is less server load. If the problem persists, please contact support.");
+                        _logger.LogException(ex.Message);
+                        throw;
+                    }
+
                 }
 
                 // if the course is not found the program will log it and go to the next completion
