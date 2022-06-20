@@ -82,7 +82,8 @@ namespace AutomateWashingtonUploads.StaticData
             "WA2021-061",
             "WA2022-120",
             "WA2022-171",
-            "WA2022-131"
+            "WA2022-131",
+            "WA2022-331"
         };
 
         public static Dictionary<string, string> Old_New_Courses = new Dictionary<string, string>{
@@ -94,7 +95,7 @@ namespace AutomateWashingtonUploads.StaticData
             { "WA2016-509", "WA2019-433" }, // Chapter 2 Definitions
             { "WA2016-491", "WA2019-435" }, // Chapter 7 Sanitary Drains
             { "WA2016-587", "WA2019-434" }, // Chapter 6 Water Systems
-            { "WA2016-741", "WA2019-610" }, // Understanding Ele. Wire Dia. 9.28.2019
+            { "WA2016-741", "WA2022-331" }, // Understanding Ele. Wire Dia. 9.28.2019
             { "WA2016-696", "WA2019-725" }, // 2015 UPC Chapter 2 Definitions Part 1
             { "WA2016-695", "WA2019-726" }, // 2015 UPC Chapter 2 Definitions Part 2
             { "WA2016-740", "WA2019-727" }, // Basic Electricity 12.2.2019
@@ -127,7 +128,8 @@ namespace AutomateWashingtonUploads.StaticData
             { "WA2019-134", "WA2022-112" }, // electrical safety
             { "WA2016-346", "WA2022-171" }, // electrical review
             { "WA2019-158", "WA2022-171" }, // electrical review
-            { "WA2019-231", "WA2022-131" } // IMC Chp 11
+            { "WA2019-231", "WA2022-131" }, // IMC Chp 11
+            { "WA2019-610", "WA2022-331" } // Understanding Ele. Wire Dia. 9.28.2019
         };
     }
 }
