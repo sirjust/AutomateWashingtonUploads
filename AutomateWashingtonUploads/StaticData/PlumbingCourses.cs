@@ -98,7 +98,7 @@ namespace AutomateWashingtonUploads.StaticData
             { "WA2016-741", "WA2022-331" }, // Understanding Ele. Wire Dia. 9.28.2019
             { "WA2016-696", "WA2019-725" }, // 2015 UPC Chapter 2 Definitions Part 1
             { "WA2016-695", "WA2019-726" }, // 2015 UPC Chapter 2 Definitions Part 2
-            { "WA2016-740", "WA2019-727" }, // Basic Electricity 12.2.2019
+            { "WA2016-740", "WA2022-532" }, // Basic Electricity 11.24.2022
             { "WA2017-004", "WA2020-054" }, // 2015 UPC Chapter 9 Venting
             { "WA2017-116", "WA2020-055" }, // 2015 UPC Update 1.23.2019
             { "WA2019-433", "WA2020-455" }, // 2015 UPC Chp 2 Definitions - Questions
@@ -119,7 +119,7 @@ namespace AutomateWashingtonUploads.StaticData
             { "WA2019-040", "WA2020-468" }, // 2015 UPC Chp 15 Alt Water Sources
             { "WA2019-041", "WA2020-469" }, // 2015 UPC Chp 16 Nonpotable Rainwater
             { "WA2020-055", "WA2020-632" }, // 2015 UPC Update
-            { "WA2017-652", "WA2020-825" }, // Excavation
+            { "WA2017-652", "WA2022-531" }, // Excavation 11.24.2022
             { "WA2018-184", "WA2021-027" }, // Wells Part 1
             { "WA2018-185", "WA2021-061" },  // Wells Part 2
             { "WA2016-323", "WA2022-120" }, // electrical safety
@@ -129,7 +129,10 @@ namespace AutomateWashingtonUploads.StaticData
             { "WA2016-346", "WA2022-171" }, // electrical review
             { "WA2019-158", "WA2022-171" }, // electrical review
             { "WA2019-231", "WA2022-131" }, // IMC Chp 11
-            { "WA2019-610", "WA2022-331" } // Understanding Ele. Wire Dia. 9.28.2019
+            { "WA2019-610", "WA2022-331" }, // Understanding Ele. Wire Dia. 9.28.2019
+            { "WA2019-727", "WA2022-532" }, // Basic Electricity 11.24.2022
+            { "WA2020-804", "WA2022-533" }, // HVAC Elec. Wire Diagrams 11.24.2022
+            { "WA2020-825", "WA2022-531" } // Excavation 11.24.2022
         };
     }
 }
