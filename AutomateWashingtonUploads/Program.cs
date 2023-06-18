@@ -24,8 +24,8 @@ namespace AutomateWashingtonUploads
             // send sanitized data to uploader, iterate and upload each entry
             kernel.Get<IUploader>().InputCompletions(completionRepository.Completions);
 
-            // now we will send an email with the log file
-            await kernel.Get<IEmailHelper>().SendEmail();
+            // email isn't working due to security features, can revisit
+            // await kernel.Get<IEmailHelper>().SendEmail();
 
             // the log file is located in the bin/debug folder, it is called log.txt
             Console.WriteLine("\nYour uploads are complete. Please check the log file for any errors.");

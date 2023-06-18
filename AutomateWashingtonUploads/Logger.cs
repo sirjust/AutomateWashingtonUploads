@@ -5,7 +5,7 @@ namespace AutomateWashingtonUploads
 {
     public class Logger : ILogger
     {
-        public string StreamLocation { get; set; } = @"..\..\..\Logs\log_" + DateTime.Today.Month.ToString() + "-" + DateTime.Today.Day.ToString() + "-" + DateTime.Today.Year.ToString() + ".txt";
+        public string StreamLocation { get; set; } = @".\Logs\log_" + DateTime.Today.Month.ToString() + "-" + DateTime.Today.Day.ToString() + "-" + DateTime.Today.Year.ToString() + ".txt";
         public void WriteToLog(string logMessage, TextWriter sw)
         {
             sw.Write("\r\nLog Entry : ");
